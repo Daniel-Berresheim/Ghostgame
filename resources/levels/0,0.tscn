@@ -12,6 +12,8 @@
 
 [node name="World" type="Node2D" index="0"]
 
+_sections_unfolded = [ "Z Index" ]
+
 [node name="LevelProperties" parent="." index="0" instance=ExtResource( 1 )]
 
 base_color = Color( 0.960938, 0.983521, 1, 1 )

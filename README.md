@@ -54,7 +54,7 @@ scene loading:
 - unpossess processes can lead to unloading of the whole scene
 - if an object is possessed during a scene transition, the transition failes; the ghost should left the object before the transition
 - using the tab scene reset spawns the player at the wrong position; it should be saved where the player entered a scene
-- if the player switches between scenes at a fast pace, the loading and unloading is screwed up; there should be a short delay after a scene transition, in which the player cannot move
+- if the player switches between scenes at a fast pace, the loading and unloading is screwed up; a short delay doesn't seem to fix this problem
 
 
 Collision System:
@@ -68,9 +68,9 @@ collision layer:
 
 Z Index:
 
--1	background
-0	clock
-1	-
+-1	background_color
+0	background_texture
+1	clock
 2	-
 3	-
 4	iron_crate

@@ -63,8 +63,9 @@ func _update_sprite():
 custom_solver_bias = 0.0
 extents = Vector2( 9, 17 )
 
-[node name="Clock" type="Node2D"]
+[node name="Clock" type="Node2D" index="0"]
 
+z_index = 1
 script = SubResource( 1 )
 _sections_unfolded = [ "Z Index" ]
 
