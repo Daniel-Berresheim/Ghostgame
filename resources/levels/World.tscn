@@ -3,20 +3,18 @@
 [ext_resource path="res://resources/fonts/Creepster-Regular.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://resources/objects/others/Ghost.tscn" type="PackedScene" id=2]
 
-
-
-
-
-
-
-
-
-
 [sub_resource type="GDScript" id=1]
 
 script/source = "extends Node2D
 
+# The size of each room.
 const ROOM_SIZE = Vector2(512, 288)
+
+# Safe distance for the player to teleport to when transitioning.
+const TRANSITION_PADDING = 16
+
+var border_collision_scene = preload(\"res://resources/collisions/BorderCollision.tscn\")
+var border_collision = null
 
 onready var player = $\"Ghost\"
 
@@ -91,8 +89,12 @@ func _process(delta):
 	
 	var camera = $\"Camera\"
 	var target_pos = (pos + Vector2(0.5, 0.5)) * ROOM_SIZE
-	camera.global_position += (target_pos - camera.global_position) * max(delta * transition_speed, 0)
+	camera.global_position += (target_pos - camera.global_position) * min(delta * transition_speed, 1)
 	if (target_pos - camera.global_position).length_squared() < 0.1:
+		if border_collision != null:
+			remove_child(border_collision)
+			border_collision = null
+		
 		if previous_area:
 			previous_area.unload()
 			previous_area = null
@@ -101,6 +103,19 @@ func _process(delta):
 	if area != current_area:
 		previous_area = current_area
 		current_area = area
+		
+		player.unpossess()
+		var gpos = player.global_position
+		gpos = Vector2(
+			clamp(gpos.x, pos.x * ROOM_SIZE.x + TRANSITION_PADDING, (pos.x + 1) * ROOM_SIZE.x - TRANSITION_PADDING),
+			clamp(gpos.y, pos.y * ROOM_SIZE.y + TRANSITION_PADDING, (pos.y + 1) * ROOM_SIZE.y - TRANSITION_PADDING)
+		)
+		player.global_position = gpos
+		player._position = gpos
+		
+		border_collision = border_collision_scene.instance()
+		add_child(border_collision)
+		border_collision.global_position = pos * ROOM_SIZE
 		
 		$\"Camera/TransitionText/Label\".text = current_area.scene_instance.get_node(\"LevelProperties\").title_text;
 		$\"Camera/TransitionText/AnimationPlayer\".play(\"AreaEntered\")

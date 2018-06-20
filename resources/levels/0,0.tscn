@@ -10,23 +10,6 @@
 [ext_resource path="res://resources/objects/possessables/rigid/Lamp.tscn" type="PackedScene" id=8]
 [ext_resource path="res://resources/collisions/RectangleBody.tscn" type="PackedScene" id=9]
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 [node name="World" type="Node2D" index="0"]
 
 _sections_unfolded = [ "Z Index" ]
@@ -34,6 +17,7 @@ _sections_unfolded = [ "Z Index" ]
 [node name="LevelProperties" parent="." index="0" instance=ExtResource( 1 )]
 
 base_color = Color( 0.960938, 0.983521, 1, 1 )
+music = null
 
 [node name="Background" type="Sprite" parent="." index="1"]
 
@@ -70,6 +54,8 @@ position = Vector2( 144, 224 )
 position = Vector2( 280, 272 )
 
 [node name="SolidCollisions" type="Node2D" parent="." index="4"]
+
+editor/display_folded = true
 
 [node name="Rectangle" parent="SolidCollisions" index="0" instance=ExtResource( 9 )]
 

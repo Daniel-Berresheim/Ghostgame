@@ -4,10 +4,6 @@
 [ext_resource path="res://resources/sounds/GhostMove.wav" type="AudioStream" id=2]
 [ext_resource path="res://resources/textures/lights/Sphere.png" type="Texture" id=3]
 
-
-
-
-
 [sub_resource type="GDScript" id=1]
 
 script/source = "extends KinematicBody2D
@@ -69,6 +65,11 @@ func set_state(value):
 		$\"Sprite\".visible = true
 	
 	state = value
+
+# Switches the player to an unpossessed state.
+func unpossess():
+	if possessed_object != null and state == STATE_POSSESSING:
+		possessed_object.unpossess()
 
 func _ready():
 	$\"AnimationPlayer\".play(\"Idle\")
