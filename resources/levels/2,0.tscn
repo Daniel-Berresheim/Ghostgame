@@ -1,13 +1,25 @@
 [gd_scene load_steps=9 format=2]
 
-[ext_resource path="res://resources/entities/LevelProperties.tscn" type="PackedScene" id=1]
+[ext_resource path="res://resources/objects/basic/LevelProperties.tscn" type="PackedScene" id=1]
 [ext_resource path="res://resources/music/levels/SpookyTest.ogg" type="AudioStream" id=2]
 [ext_resource path="res://resources/textures/backgrounds/Test.png" type="Texture" id=3]
 [ext_resource path="res://resources/tilemaps/TileMapBlocks.tscn" type="PackedScene" id=4]
 [ext_resource path="res://resources/collisions/RectangleBody.tscn" type="PackedScene" id=5]
-[ext_resource path="res://resources/entities/Pumpkin.tscn" type="PackedScene" id=6]
-[ext_resource path="res://resources/entities/Crate.tscn" type="PackedScene" id=7]
-[ext_resource path="res://resources/entities/Lamp.tscn" type="PackedScene" id=8]
+[ext_resource path="res://resources/objects/others/Pumpkin.tscn" type="PackedScene" id=6]
+[ext_resource path="res://resources/objects/possessables/movables/Crate.tscn" type="PackedScene" id=7]
+[ext_resource path="res://resources/objects/possessables/rigid/Lamp.tscn" type="PackedScene" id=8]
+
+
+
+
+
+
+
+
+
+
+
+
 
 [node name="2,0" type="Node2D" index="0"]
 

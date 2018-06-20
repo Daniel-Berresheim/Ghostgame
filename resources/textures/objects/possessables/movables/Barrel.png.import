@@ -2,12 +2,12 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Barrel.png-b9e95e1cec28ae7dd639d12b9a9a3a7a.stex"
+path="res://.import/Barrel.png-9747d1949e40a139ef0fedd86f47fc60.stex"
 
 [deps]
 
-source_file="res://resources/textures/entities/movable_objects/Barrel.png"
-dest_files=[ "res://.import/Barrel.png-b9e95e1cec28ae7dd639d12b9a9a3a7a.stex" ]
+source_file="res://resources/textures/objects/possessables/movables/Barrel.png"
+dest_files=[ "res://.import/Barrel.png-9747d1949e40a139ef0fedd86f47fc60.stex" ]
 
 [params]
 

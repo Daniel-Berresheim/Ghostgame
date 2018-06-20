@@ -2,12 +2,12 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Crate.png-86c2130e04ba40afa654d2f9b4d81b6a.stex"
+path="res://.import/ClockBottom.png-5a18cb88da3e9304351351d766fd4edf.stex"
 
 [deps]
 
-source_file="res://resources/textures/entities/movable_objects/Crate.png"
-dest_files=[ "res://.import/Crate.png-86c2130e04ba40afa654d2f9b4d81b6a.stex" ]
+source_file="res://resources/textures/objects/possessables/rigid/ClockBottom.png"
+dest_files=[ "res://.import/ClockBottom.png-5a18cb88da3e9304351351d766fd4edf.stex" ]
 
 [params]
 

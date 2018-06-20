@@ -1,10 +1,22 @@
 [gd_scene load_steps=8 format=2]
 
-[ext_resource path="res://resources/entities/Possessable.tscn" type="PackedScene" id=1]
-[ext_resource path="res://resources/textures/entities/immovable_objects/ClockTop.png" type="Texture" id=2]
-[ext_resource path="res://resources/textures/entities/immovable_objects/ClockBottom.png" type="Texture" id=3]
+[ext_resource path="res://resources/objects/basic/Possessable.tscn" type="PackedScene" id=1]
+[ext_resource path="res://resources/textures/objects/possessables/rigid/ClockTop.png" type="Texture" id=2]
+[ext_resource path="res://resources/textures/objects/possessables/rigid/ClockBottom.png" type="Texture" id=3]
 [ext_resource path="res://resources/sounds/ClockTick.wav" type="AudioStream" id=4]
 [ext_resource path="res://resources/sounds/ClockTock.wav" type="AudioStream" id=5]
+
+
+
+
+
+
+
+
+
+
+
+
 
 [sub_resource type="GDScript" id=1]
 
@@ -25,7 +37,7 @@ func _ready():
 
 func _process(delta):
 	
-	# defines the state of the pendel
+	# defines the state of the pendulum
 	state += (delta / cycle_time)
 	if state > cycle_time:
 		sound_tick = 0

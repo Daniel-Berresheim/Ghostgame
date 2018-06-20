@@ -2,12 +2,12 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/ClockTop.png-58c39722cc11db4c757b041685e3cd6b.stex"
+path="res://.import/Pumpkin.png-7dfdfc6de53fc7e4b831b80b991b561c.stex"
 
 [deps]
 
-source_file="res://resources/textures/entities/immovable_objects/ClockTop.png"
-dest_files=[ "res://.import/ClockTop.png-58c39722cc11db4c757b041685e3cd6b.stex" ]
+source_file="res://resources/textures/objects/others/Pumpkin.png"
+dest_files=[ "res://.import/Pumpkin.png-7dfdfc6de53fc7e4b831b80b991b561c.stex" ]
 
 [params]
 

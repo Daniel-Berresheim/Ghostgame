@@ -1,8 +1,8 @@
 [gd_scene load_steps=9 format=2]
 
-[ext_resource path="res://resources/entities/Moveable.tscn" type="PackedScene" id=1]
+[ext_resource path="res://resources/objects/basic/Moveable.tscn" type="PackedScene" id=1]
 [ext_resource path="res://resources/collisions/RoundRectangleShape.tscn" type="PackedScene" id=2]
-[ext_resource path="res://resources/textures/entities/movable_objects/Crate.png" type="Texture" id=3]
+[ext_resource path="res://resources/textures/objects/possessables/movables/Crate.png" type="Texture" id=3]
 [ext_resource path="res://resources/sounds/CrateMove.wav" type="AudioStream" id=4]
 [ext_resource path="res://resources/sounds/CrateImpact.wav" type="AudioStream" id=5]
 [ext_resource path="res://resources/sounds/CrateFalling.wav" type="AudioStream" id=6]

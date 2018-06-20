@@ -2,12 +2,12 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Ghost.png-a0ad0c52fca1c4fed20985abaf782c20.stex"
+path="res://.import/Boy.png-125e277bbdfd215f3a1671378dc66765.stex"
 
 [deps]
 
-source_file="res://resources/textures/entities/characters/Ghost.png"
-dest_files=[ "res://.import/Ghost.png-a0ad0c52fca1c4fed20985abaf782c20.stex" ]
+source_file="res://resources/textures/objects/unused/Boy.png"
+dest_files=[ "res://.import/Boy.png-125e277bbdfd215f3a1671378dc66765.stex" ]
 
 [params]
 
@@ -16,7 +16,7 @@ compress/lossy_quality=0.7
 compress/hdr_mode=0
 compress/normal_map=0
 flags/repeat=0
-flags/filter=false
+flags/filter=true
 flags/mipmaps=false
 flags/anisotropic=false
 flags/srgb=2
@@ -25,5 +25,5 @@ process/premult_alpha=false
 process/HDR_as_SRGB=false
 stream=false
 size_limit=0
-detect_3d=false
+detect_3d=true
 svg/scale=1.0

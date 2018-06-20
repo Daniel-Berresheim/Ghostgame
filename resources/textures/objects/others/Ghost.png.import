@@ -2,12 +2,12 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Thermometer.png-2f5131ed0f8a4a2138a6886338a330bf.stex"
+path="res://.import/Ghost.png-c23cdd38ad03f44be189a499f81da48d.stex"
 
 [deps]
 
-source_file="res://resources/textures/entities/immovable_objects/Thermometer.png"
-dest_files=[ "res://.import/Thermometer.png-2f5131ed0f8a4a2138a6886338a330bf.stex" ]
+source_file="res://resources/textures/objects/others/Ghost.png"
+dest_files=[ "res://.import/Ghost.png-c23cdd38ad03f44be189a499f81da48d.stex" ]
 
 [params]
 

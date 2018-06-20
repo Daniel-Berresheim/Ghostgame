@@ -1,7 +1,13 @@
 [gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://resources/textures/entities/immovable_objects/IronCrate.png" type="Texture" id=1]
+[ext_resource path="res://resources/textures/objects/others/IronCrate.png" type="Texture" id=1]
 [ext_resource path="res://resources/collisions/RoundRectangleShape.tscn" type="PackedScene" id=2]
+
+
+
+
+
+
 
 [node name="IronCrate" type="Node2D"]
 

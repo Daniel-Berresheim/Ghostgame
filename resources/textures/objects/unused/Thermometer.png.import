@@ -2,12 +2,12 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/ClockBottom.png-28683f87991c42ab577195f8fe5f80a4.stex"
+path="res://.import/Thermometer.png-07c8e577d6093a77ad5b6b23e316249a.stex"
 
 [deps]
 
-source_file="res://resources/textures/entities/immovable_objects/ClockBottom.png"
-dest_files=[ "res://.import/ClockBottom.png-28683f87991c42ab577195f8fe5f80a4.stex" ]
+source_file="res://resources/textures/objects/unused/Thermometer.png"
+dest_files=[ "res://.import/Thermometer.png-07c8e577d6093a77ad5b6b23e316249a.stex" ]
 
 [params]
 

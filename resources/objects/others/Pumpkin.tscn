@@ -1,7 +1,13 @@
 [gd_scene load_steps=6 format=2]
 
-[ext_resource path="res://resources/textures/entities/immovable_objects/Pumpkin.png" type="Texture" id=1]
+[ext_resource path="res://resources/textures/objects/others/Pumpkin.png" type="Texture" id=1]
 [ext_resource path="res://resources/textures/lights/Sphere.png" type="Texture" id=2]
+
+
+
+
+
+
 
 [sub_resource type="GDScript" id=1]
 
