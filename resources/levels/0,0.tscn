@@ -56,9 +56,7 @@ position = Vector2( 280, 272 )
 
 [node name="Boy" parent="Objects" index="5" instance=ExtResource( 9 )]
 
-position = Vector2( 48, 160 )
-z_index = 0
-script = null
+position = Vector2( 56, 256 )
 
 [node name="SolidCollisions" type="Node2D" parent="." index="4"]
 

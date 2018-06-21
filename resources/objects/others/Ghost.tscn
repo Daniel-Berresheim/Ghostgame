@@ -66,10 +66,9 @@ func set_state(value):
 	
 	state = value
 
-# Switches the player to an unpossessed state.
 func unpossess():
-	if possessed_object != null and state == STATE_POSSESSING:
-		possessed_object.unpossess()
+	# Switches the player to an unpossessed state.
+	if possessed_object != null and state == STATE_POSSESSING: possessed_object.unpossess()
 
 func _ready():
 	$\"AnimationPlayer\".play(\"Idle\")
@@ -81,8 +80,7 @@ func _input(event):
 		
 		can_switch = true
 		
-		if state != STATE_POSSESSING:
-			_possessible_index += 1
+		if state != STATE_POSSESSING: _possessible_index += 1
 		
 	# Enables the Ghost to possess other objects
 	if event.is_action_pressed(\"possess\"):

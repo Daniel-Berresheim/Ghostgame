@@ -2,10 +2,9 @@
 
 Planned Features:
 
-new object: Human
-- can be possessed
-- can run and jump (jumpwidth: ca. 1.5 block; jumpheight: ca. 1.5 blocks)
-- will die from falldamage after slightly less than 3 blocks (48 pixel)
+object human:
+- can jump (jumpwidth: ca. 1.5 block; jumpheight: ca. 1.5 blocks)
+- dying animation and sound, screen fades out and level resets
 - can have different textures and abilities, some cannot be possessed and walk on their own
 - can be scared, can run away
 
@@ -53,6 +52,7 @@ Unsolved Bugs:
 scene loading:
 - unpossess processes can lead to unloading of the whole scene
 - using the tab scene reset spawns the player at the wrong position; it should be saved where the player entered a scene
+- error messages
 
 
 Collision System:

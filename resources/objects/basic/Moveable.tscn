@@ -67,9 +67,7 @@ func _physics_process(delta):
 				speed += dir.normalized() * movement_speed * delta
 	else:
 		
-		if _p.possessed:
-			if on_ground:
-				snap_falling_position()
+		if _p.possessed and on_ground: snap_falling_position()
 		
 		var snd_falling = $\"Sounds/Falling\"
 		if not snd_falling.is_playing():
@@ -87,19 +85,7 @@ func _physics_process(delta):
 	actual_movement = (actual_movement - global_position) / delta
 	
 	# moves the player along with the object it possesses
-	if _p.possessed:
-		
-		_p.player.global_position = global_position
-		
-	# Move stacked blocks
-	#var rc_up = get_node(\"RayCastUp\")
-	
-	#if rc_up.is_colliding():
-		
-		#var collider = rc_up.get_collider()
-		
-		#if abs(collider.speed.x) < abs(speed.x):
-		#	 collider.speed.x = speed.x
+	if _p.possessed: _p.player.global_position = global_position
 
 func _deadzone(axis):
 	var length = axis.length()

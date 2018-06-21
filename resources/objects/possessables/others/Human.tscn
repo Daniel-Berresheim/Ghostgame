@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://resources/objects/basic/Possessable.tscn" type="PackedScene" id=1]
 [ext_resource path="res://resources/textures/objects/possessables/others/Boy.png" type="Texture" id=2]
@@ -9,14 +9,10 @@
 script/source = "extends KinematicBody2D
 
 # todo:
-# - can walk
 # - can jump (1.5 blocks horizontaly and vertically)
 # - no controll while jumping? (no direction change in midair)
-# - has friction and gravity
 # - no snapping while falling, normal movement calculation
 # - sounds
-# - animations
-# - falldamage (dies from a height of slightly less than 3 blocks)
 # - dies if movables fall on it
 # - dying: the player falls over with an animation and sound; the screen fades out and the level resets
 # - some humans have other abilities, which are shown on the sprite; e.g. cannot be possessed
@@ -28,8 +24,19 @@ script/source = "extends KinematicBody2D
 # - this value can be raised if it's dark, etc. and through events
 # - adults could have a higher resistance to scary things
 
+# Deadzone of controller axis.
+const DEADZONE = 0.25
+
+var alive = true
+
 # gravity applied on the character
 export var gravity = Vector2(0, 7000)
+
+# The speed of the human will be multiplied by this value in the span of one second.
+export(float) var friction = 0.00002
+
+# Movement speed in pixels per second.
+export(float) var movement_speed = 1200
 
 # The current speed of the human.
 var speed = Vector2(0.0, 0.0)
@@ -40,20 +47,73 @@ var actual_movement = Vector2()
 # True if colliding with ground.
 var on_ground = true
 
+var fall_position = 0
+
+var was_walking = false
+
+onready var _p = $\"Possessable\"
+onready var _animation = get_node(\"AnimationPlayer\")
+
 func _ready():
 	
-	print(\"Saft\")
+	_animation.play(\"Idle\")
+	
 	pass
 
 func _physics_process(delta):
 	
 	# tests, whether the player is on ground
 	var on_ground_new = test_move(global_transform, Vector2(0, 1))
-	print(on_ground_new)
+	
+	var walking = false
 	
 	if on_ground_new:
 		
-		print(\"On Ground\")
+		if !on_ground:
+			
+			# hit the ground
+			# play sound, etc.
+			
+			emit_signal(\"impact\", speed.x)
+			
+			# human dies, if fallheight is over 2.5 blocks (40 pixel)
+			var fall_height = -(fall_position - global_position.y)
+			
+			if fall_height > 40:
+				# die
+				print(\"Human died\")
+				alive = false
+		
+		# if on ground and possessed, calculate input direction and speed
+		if _p.possessed and alive:
+			var analog = _deadzone(Vector2(Input.get_joy_axis(0, JOY_AXIS_0), 0))
+			if analog != Vector2():
+				speed += analog * movement_speed * delta
+				walking = true
+			else:
+				if Input.is_action_pressed(\"move_right\") or Input.is_action_pressed(\"move_left\"):
+					var dir = Vector2()
+					dir.x += int(Input.is_action_pressed(\"move_right\")) - int(Input.is_action_pressed(\"move_left\"))
+					speed += dir.normalized() * movement_speed * delta
+					walking = true
+			
+	# animation
+	if walking and !was_walking: _animation.play(\"Walking\")
+	elif !walking and was_walking: _animation.play(\"Idle\")
+		
+	was_walking = walking
+		
+	# looking direction
+	if speed.x < 0: $\"Sprite\".flip_h = false
+	elif speed.x > 0: $\"Sprite\".flip_h = true
+		
+	if on_ground:
+		
+		if !on_ground_new:
+			
+			# start falling
+			# mark position as start point for falling
+			fall_position = global_position.y
 		
 	else:
 		
@@ -61,11 +121,24 @@ func _physics_process(delta):
 		
 	on_ground = on_ground_new
 	
+	speed *= pow(friction, delta)
+	
 	actual_movement = global_position
 	move_and_slide(speed, Vector2(0, -1))
 	actual_movement = (actual_movement - global_position) / delta
-	pass
-"
+	
+	# moves the player along with the human
+	if _p.possessed: _p.player.global_position = global_position
+
+func _deadzone(axis):
+	var length = axis.length()
+	
+	if length < DEADZONE:
+		return Vector2()
+	if length > 1:
+		return axis.normalized()
+	
+	return axis"
 
 [sub_resource type="CircleShape2D" id=2]
 
@@ -78,6 +151,44 @@ custom_solver_bias = 0.0
 radius = 6.48239
 height = 11.4675
 
+[sub_resource type="Animation" id=4]
+
+resource_name = "Idle"
+length = 1.0
+loop = true
+step = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 0 ]
+}
+
+[sub_resource type="Animation" id=5]
+
+resource_name = "Walking"
+length = 0.8
+loop = true
+step = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3, 4, 5, 6, 7 ]
+}
+
 [node name="Human" type="KinematicBody2D" index="0"]
 
 z_index = 7
@@ -88,6 +199,8 @@ collision/safe_margin = 0.08
 script = SubResource( 1 )
 _sections_unfolded = [ "Collision", "Z Index" ]
 gravity = Vector2( 0, 7000 )
+friction = 2e-005
+movement_speed = 1200
 
 [node name="Possessable" parent="." index="0" instance=ExtResource( 1 )]
 
@@ -100,6 +213,7 @@ shape = SubResource( 2 )
 
 texture = ExtResource( 2 )
 hframes = 8
+frame = 7
 _sections_unfolded = [ "Animation" ]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." index="2"]
@@ -131,5 +245,16 @@ shadow_gradient_length = 0.0
 shadow_filter = 0
 shadow_filter_smooth = 0.0
 shadow_item_cull_mask = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="4"]
+
+root_node = NodePath("..")
+autoplay = ""
+playback_process_mode = 1
+playback_default_blend_time = 0.0
+playback_speed = 1.0
+anims/Idle = SubResource( 4 )
+anims/Walking = SubResource( 5 )
+blend_times = [  ]
 
 
