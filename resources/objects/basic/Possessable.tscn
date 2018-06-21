@@ -207,6 +207,7 @@ angular_damp = 1.0
 audio_bus_override = false
 audio_bus_name = "Master"
 script = SubResource( 1 )
+_sections_unfolded = [ "Collision" ]
 msg_posses_offset = Vector2( 0, 0 )
 
 [node name="Sounds" type="Node2D" parent="." index="0"]

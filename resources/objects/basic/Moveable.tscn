@@ -2,9 +2,6 @@
 
 [ext_resource path="res://resources/objects/basic/Possessable.tscn" type="PackedScene" id=1]
 
-
-
-
 [sub_resource type="GDScript" id=1]
 
 script/source = "extends KinematicBody2D
@@ -60,7 +57,7 @@ func _physics_process(delta):
 			snd_impact.play()
 		
 		# if the object is possessable, the horizontal moving direction will be determined
-		if $\"Possessable\".possessed:
+		if _p.possessed:
 			var analog = _deadzone(Vector2(Input.get_joy_axis(0, JOY_AXIS_0), 0))
 			if analog != Vector2():
 				speed += analog * movement_speed * delta
@@ -70,7 +67,7 @@ func _physics_process(delta):
 				speed += dir.normalized() * movement_speed * delta
 	else:
 		
-		if $\"Possessable\".possessed:
+		if _p.possessed:
 			if on_ground:
 				snap_falling_position()
 		
@@ -90,9 +87,9 @@ func _physics_process(delta):
 	actual_movement = (actual_movement - global_position) / delta
 	
 	# moves the player along with the object it possesses
-	if $\"Possessable\".possessed:
+	if _p.possessed:
 		
-		$\"Possessable\".player.global_position = global_position
+		_p.player.global_position = global_position
 		
 	# Move stacked blocks
 	#var rc_up = get_node(\"RayCastUp\")
@@ -132,8 +129,6 @@ movement_speed = 1200
 friction = 2e-005
 
 [node name="Possessable" parent="." index="0" instance=ExtResource( 1 )]
-
-msg_posses_offset = Vector2( 0, 0 )
 
 [node name="PossessArea" type="CollisionShape2D" parent="Possessable" index="1"]
 

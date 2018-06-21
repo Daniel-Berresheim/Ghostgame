@@ -10,6 +10,9 @@ script/source = "extends Node2D
 # The size of each room.
 const ROOM_SIZE = Vector2(512, 288)
 
+# Determines if fullscreen is active
+var is_fullscreen = false
+
 # Safe distance for the player to teleport to when transitioning.
 const TRANSITION_PADDING = 16
 
@@ -63,6 +66,23 @@ class Area:
 			root_node.remove_child(scene_instance)
 		print(\"Unloaded scene \" + str(pos))
 		
+
+# general input events for settings
+func _input(event):
+	
+	# Changes state from fullscreen to normal and vice versa
+	if event.is_action_pressed(\"switch_fullscreen\"):
+		
+		is_fullscreen = !is_fullscreen
+		
+		if is_fullscreen: OS.set_window_fullscreen(true)
+		else: OS.set_window_fullscreen(false)
+	
+	# Reloads the current scene
+	# Todo: Save progress
+	if event.is_action_pressed(\"reload\"):
+		
+		get_tree().reload_current_scene()
 
 func round_area_position(pos):
 	pos.x = floor(pos.x / ROOM_SIZE.x)

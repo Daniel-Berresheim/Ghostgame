@@ -74,7 +74,7 @@ Z Index:
 4	iron_crate
 5	crate; barrel
 6	lamp
-7	pumpkin
+7	human; pumpkin
 8	ghost
 9	-
 10	msg_possess
