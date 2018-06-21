@@ -23,6 +23,10 @@ func _ready():
 	$\"Possessable\".connect(\"unpossessed\", self, \"_unpossessed\")
 	
 	get_node(\"AnimationPlayer\").play(\"Unpossessed\")
+	
+	# get the current time
+	var c_time = OS.get_time()
+	time = c_time.hour * 60 * 60 + c_time.minute * 60 + c_time.second
 
 func _process(delta):
 	
@@ -41,7 +45,7 @@ func _process(delta):
 	time += delta
 	
 	if possessed and Input.is_action_pressed(\"action\"):
-		time += delta * 1800
+		time += delta * 3600
 	
 	_update_sprite()
 
@@ -60,11 +64,12 @@ func _update_sprite():
 	
 	if is_inside_tree():
 		
+		# calculate position of hands
 		var big_hand = get_node(\"BigHand\")
-		big_hand.frame = int(int(time / 60) % 12)
+		big_hand.frame = (float(int(time) % 3600) / 60 / 60) * 12
 		
 		var small_hand = get_node(\"SmallHand\")
-		small_hand.frame = int(12 + int(time / 720) % 12)
+		small_hand.frame = int(time / (60 * 60)) % 12
 		"
 
 [sub_resource type="RectangleShape2D" id=2]
