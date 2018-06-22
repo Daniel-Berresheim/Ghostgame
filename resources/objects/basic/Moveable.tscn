@@ -12,7 +12,7 @@ const DEADZONE = 0.25
 export var gravity = Vector2(0, 5000)
 
 # Movement speed in pixels per second.
-export(float) var movement_speed = 1200
+export(float) var movement_speed = 1100
 
 # Friction of the movement.
 # The player's speed will be multiplied by this value in the span of one second.
@@ -111,7 +111,7 @@ collision/safe_margin = 0.08
 script = SubResource( 1 )
 _sections_unfolded = [ "Collision" ]
 gravity = Vector2( 0, 5000 )
-movement_speed = 1200
+movement_speed = 1100
 friction = 2e-005
 
 [node name="Possessable" parent="." index="0" instance=ExtResource( 1 )]

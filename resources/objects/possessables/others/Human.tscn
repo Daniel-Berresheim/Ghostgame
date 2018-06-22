@@ -77,8 +77,9 @@ func _physics_process(delta):
 			var fall_height = -(fall_position - global_position.y)
 			
 			if fall_height > 40:
-				# die
-				$\"AnimationPlayer\".play(\"Die\")
+				if alive:
+					# die
+					$\"AnimationPlayer\".play(\"Die\")
 				alive = false
 		
 		# jump
@@ -156,7 +157,7 @@ custom_solver_bias = 0.0
 radius = 6.84571
 height = 10.5188
 
-[sub_resource type="Animation" id=6]
+[sub_resource type="Animation" id=4]
 
 resource_name = "Die"
 length = 1.0
@@ -177,9 +178,8 @@ tracks/0/keys = {
 } ]
 }
 
-[sub_resource type="Animation" id=4]
+[sub_resource type="Animation" id=5]
 
-resource_name = "Idle"
 length = 1.0
 loop = true
 step = 0.1
@@ -196,9 +196,8 @@ tracks/0/keys = {
 "values": [ 0 ]
 }
 
-[sub_resource type="Animation" id=5]
+[sub_resource type="Animation" id=6]
 
-resource_name = "Walking"
 length = 0.8
 loop = true
 step = 0.1
@@ -238,7 +237,7 @@ tracks/1/keys = {
 } ]
 }
 
-[node name="Human" type="KinematicBody2D" index="0"]
+[node name="Human" type="KinematicBody2D"]
 
 z_index = 7
 input_pickable = false
@@ -253,6 +252,8 @@ movement_speed = 1200
 jump_strength = 10000
 
 [node name="Possessable" parent="." index="0" instance=ExtResource( 1 )]
+
+msg_posses_offset = Vector2( 0, -16 )
 
 [node name="PossessArea" type="CollisionShape2D" parent="Possessable" index="2"]
 
@@ -303,9 +304,9 @@ autoplay = ""
 playback_process_mode = 1
 playback_default_blend_time = 0.0
 playback_speed = 1.0
-anims/Die = SubResource( 6 )
-anims/Idle = SubResource( 4 )
-anims/Walking = SubResource( 5 )
+anims/Die = SubResource( 4 )
+anims/Idle = SubResource( 5 )
+anims/Walking = SubResource( 6 )
 blend_times = [  ]
 
 [node name="Sounds" type="Node2D" parent="." index="5"]
