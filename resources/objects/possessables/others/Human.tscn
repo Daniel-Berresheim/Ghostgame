@@ -30,13 +30,16 @@ const DEADZONE = 0.25
 var alive = true
 
 # gravity applied on the character
-export var gravity = Vector2(0, 7000)
+export var gravity = Vector2(0, 2000)
 
 # The speed of the human will be multiplied by this value in the span of one second.
-export(float) var friction = 0.00002
+export(float) var friction = 0.00005
 
 # Movement speed in pixels per second.
-export(float) var movement_speed = 1200
+export(float) var movement_speed = 1400
+
+# Jump strength
+export(float) var jump_strength = 16000
 
 # The current speed of the human.
 var speed = Vector2(0.0, 0.0)
@@ -84,6 +87,14 @@ func _physics_process(delta):
 				print(\"Human died\")
 				alive = false
 		
+		if _p.possessed and alive:
+			# jump
+			if Input.is_action_just_pressed(\"move_up\"):
+				
+				speed.y -= jump_strength * delta
+				
+				pass
+		
 		# if on ground and possessed, calculate input direction and speed
 		if _p.possessed and alive:
 			var analog = _deadzone(Vector2(Input.get_joy_axis(0, JOY_AXIS_0), 0))
@@ -119,9 +130,11 @@ func _physics_process(delta):
 		
 		speed += gravity * delta
 		
-	on_ground = on_ground_new
+	if on_ground_new:
+		
+		speed *= pow(friction, delta)	
 	
-	speed *= pow(friction, delta)
+	on_ground = on_ground_new
 	
 	actual_movement = global_position
 	move_and_slide(speed, Vector2(0, -1))
@@ -148,8 +161,8 @@ radius = 14.0
 [sub_resource type="CapsuleShape2D" id=3]
 
 custom_solver_bias = 0.0
-radius = 6.48239
-height = 11.4675
+radius = 6.84571
+height = 10.5188
 
 [sub_resource type="Animation" id=4]
 
@@ -198,9 +211,10 @@ collision_mask = 11
 collision/safe_margin = 0.08
 script = SubResource( 1 )
 _sections_unfolded = [ "Collision", "Z Index" ]
-gravity = Vector2( 0, 7000 )
-friction = 2e-005
-movement_speed = 1200
+gravity = Vector2( 0, 2000 )
+friction = 5e-005
+movement_speed = 1400
+jump_strength = 16000
 
 [node name="Possessable" parent="." index="0" instance=ExtResource( 1 )]
 

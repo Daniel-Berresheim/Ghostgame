@@ -132,10 +132,11 @@ position = Vector2( 408, 64 )
 [node name="Boy" parent="Objects" index="6" instance=ExtResource( 11 )]
 
 position = Vector2( 160, 48 )
+movement_speed = 1300
+jump_strength = 15000
 
 [node name="Collisions" type="Node2D" parent="." index="4"]
 
-editor/display_folded = true
 __meta__ = {
 "_edit_lock_": true
 }
@@ -172,8 +173,8 @@ scale = Vector2( 1, 1.5 )
 
 [node name="StaticBody2D08" parent="Collisions" index="6" instance=ExtResource( 12 )]
 
-position = Vector2( -199.526, -69.308 )
-scale = Vector2( 0.75, 0.25 )
+position = Vector2( -191.526, -69.308 )
+scale = Vector2( 1, 0.25 )
 
 [node name="StaticBody2D12" parent="Collisions" index="7" instance=ExtResource( 12 )]
 
