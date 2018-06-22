@@ -1,9 +1,10 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://resources/objects/basic/Possessable.tscn" type="PackedScene" id=1]
 [ext_resource path="res://resources/textures/objects/possessables/others/Boy.png" type="Texture" id=2]
 [ext_resource path="res://resources/textures/lights/Sphere.png" type="Texture" id=3]
 [ext_resource path="res://resources/sounds/HumanWalk.wav" type="AudioStream" id=4]
+[ext_resource path="res://resources/sounds/HumanDie.wav" type="AudioStream" id=5]
 
 [sub_resource type="GDScript" id=1]
 
@@ -77,7 +78,7 @@ func _physics_process(delta):
 			
 			if fall_height > 40:
 				# die
-				print(\"Human died\")
+				$\"AnimationPlayer\".play(\"Die\")
 				alive = false
 		
 		# jump
@@ -154,6 +155,27 @@ radius = 14.0
 custom_solver_bias = 0.0
 radius = 6.84571
 height = 10.5188
+
+[sub_resource type="Animation" id=6]
+
+resource_name = "Die"
+length = 1.0
+loop = false
+step = 0.1
+tracks/0/type = "method"
+tracks/0/path = NodePath("Sounds/Die")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "play"
+} ]
+}
 
 [sub_resource type="Animation" id=4]
 
@@ -281,6 +303,7 @@ autoplay = ""
 playback_process_mode = 1
 playback_default_blend_time = 0.0
 playback_speed = 1.0
+anims/Die = SubResource( 6 )
 anims/Idle = SubResource( 4 )
 anims/Walking = SubResource( 5 )
 blend_times = [  ]
@@ -291,6 +314,17 @@ blend_times = [  ]
 
 stream = ExtResource( 4 )
 volume_db = -20.0
+pitch_scale = 1.0
+autoplay = false
+max_distance = 2000.0
+attenuation = 1.0
+bus = "Effects"
+area_mask = 1
+
+[node name="Die" type="AudioStreamPlayer2D" parent="Sounds" index="1"]
+
+stream = ExtResource( 5 )
+volume_db = -10.0
 pitch_scale = 1.0
 autoplay = false
 max_distance = 2000.0
