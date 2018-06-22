@@ -13,7 +13,7 @@
 [ext_resource path="res://resources/collisions/RectangleBody.tscn" type="PackedScene" id=11]
 [ext_resource path="res://resources/objects/possessables/others/Boy.tscn" type="PackedScene" id=12]
 
-[node name="World" type="Node2D" index="0"]
+[node name="World" type="Node2D"]
 
 position = Vector2( 239.526, 141.308 )
 z_index = -1

@@ -14,6 +14,7 @@
 
 [node name="LevelProperties" parent="." index="0" instance=ExtResource( 1 )]
 
+title_text = "Entry Hall"
 base_color = Color( 0.078125, 0.078125, 0.078125, 1 )
 music = ExtResource( 2 )
 

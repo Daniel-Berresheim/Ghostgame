@@ -137,8 +137,11 @@ func _process(delta):
 		add_child(border_collision)
 		border_collision.global_position = pos * ROOM_SIZE
 		
-		$\"Camera/TransitionText/Label\".text = current_area.scene_instance.get_node(\"LevelProperties\").title_text;
-		$\"Camera/TransitionText/AnimationPlayer\".play(\"AreaEntered\")
+		var label = $\"Camera/TransitionText/Label\"
+		var text = current_area.scene_instance.get_node(\"LevelProperties\").title_text
+		if label.text != text:
+			label.text = text
+			$\"Camera/TransitionText/AnimationPlayer\".play(\"AreaEntered\")
 		
 		var music = current_area.scene_instance.get_node(\"LevelProperties\").music
 		if music != $\"MusicPlayer\".stream:
