@@ -1,8 +1,9 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://resources/objects/basic/Possessable.tscn" type="PackedScene" id=1]
 [ext_resource path="res://resources/textures/objects/possessables/others/Boy.png" type="Texture" id=2]
 [ext_resource path="res://resources/textures/lights/Sphere.png" type="Texture" id=3]
+[ext_resource path="res://resources/sounds/HumanWalk.wav" type="AudioStream" id=4]
 
 [sub_resource type="GDScript" id=1]
 
@@ -199,7 +200,30 @@ tracks/0/keys = {
 "times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7 ),
 "transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1 ),
 "update": 1,
-"values": [ 0, 1, 2, 3, 4, 5, 6, 7 ]
+"values": [ 1, 2, 3, 4, 5, 6, 7, 0 ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath("Sounds/Walk")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0.1, 0.3, 0.5, 0.7 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"values": [ {
+"args": [  ],
+"method": "play"
+}, {
+"args": [  ],
+"method": "play"
+}, {
+"args": [  ],
+"method": "play"
+}, {
+"args": [  ],
+"method": "play"
+} ]
 }
 
 [node name="Human" type="KinematicBody2D" index="0"]
@@ -227,7 +251,7 @@ shape = SubResource( 2 )
 
 texture = ExtResource( 2 )
 hframes = 8
-frame = 7
+frame = 1
 _sections_unfolded = [ "Animation" ]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." index="2"]
@@ -270,5 +294,18 @@ playback_speed = 1.0
 anims/Idle = SubResource( 4 )
 anims/Walking = SubResource( 5 )
 blend_times = [  ]
+
+[node name="Sounds" type="Node2D" parent="." index="5"]
+
+[node name="Walk" type="AudioStreamPlayer2D" parent="Sounds" index="0"]
+
+stream = ExtResource( 4 )
+volume_db = -20.0
+pitch_scale = 1.0
+autoplay = false
+max_distance = 2000.0
+attenuation = 1.0
+bus = "Effects"
+area_mask = 1
 
 
