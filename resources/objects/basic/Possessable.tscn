@@ -159,18 +159,20 @@ func _input(event):
 
 script/source = "extends Node2D
 
+onready var anim = $\"Possess/AnimationPlayer\"
+
 func ready():
 	hide();
 	
 func show():
-	visible = true
-	var anim = $\"Possess/AnimationPlayer\"
-	anim.play(\"Idle\")
+	if !visible:
+		visible = true
+		anim.play(\"Idle\")
 
 func hide():
-	visible = false
-	var anim = $\"Possess/AnimationPlayer\"
-	anim.play(\"Idle\")"
+	if visible:
+		visible = false
+		anim.stop()"
 
 [sub_resource type="CanvasItemMaterial" id=3]
 
@@ -249,7 +251,6 @@ area_mask = 1
 
 [node name="MSG_Possess" type="Node2D" parent="." index="1"]
 
-visible = false
 z_index = 10
 script = SubResource( 2 )
 _sections_unfolded = [ "Transform", "Z Index" ]
@@ -262,7 +263,6 @@ z_index = 10
 z_as_relative = false
 texture = ExtResource( 4 )
 vframes = 2
-frame = 1
 _sections_unfolded = [ "Material", "Transform", "Visibility", "Z Index" ]
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="MSG_Possess/Possess" index="0"]
