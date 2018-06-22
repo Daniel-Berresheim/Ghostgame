@@ -10,8 +10,8 @@
 [ext_resource path="res://resources/objects/possessables/rigid/Lamp.tscn" type="PackedScene" id=8]
 [ext_resource path="res://resources/objects/others/IronCrate.tscn" type="PackedScene" id=9]
 [ext_resource path="res://resources/objects/others/Pumpkin.tscn" type="PackedScene" id=10]
-[ext_resource path="res://resources/objects/possessables/others/Boy.tscn" type="PackedScene" id=11]
-[ext_resource path="res://resources/collisions/RectangleBody.tscn" type="PackedScene" id=12]
+[ext_resource path="res://resources/collisions/RectangleBody.tscn" type="PackedScene" id=11]
+[ext_resource path="res://resources/objects/possessables/others/Boy.tscn" type="PackedScene" id=12]
 
 [node name="World" type="Node2D" index="0"]
 
@@ -129,125 +129,123 @@ position = Vector2( 208, 256 )
 
 position = Vector2( 408, 64 )
 
-[node name="Boy" parent="Objects" index="6" instance=ExtResource( 11 )]
-
-position = Vector2( 160, 48 )
-movement_speed = 1300
-jump_strength = 15000
-
 [node name="Collisions" type="Node2D" parent="." index="4"]
 
 __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="StaticBody2D01" parent="Collisions" index="0" instance=ExtResource( 12 )]
+[node name="StaticBody2D01" parent="Collisions" index="0" instance=ExtResource( 11 )]
 
 position = Vector2( 200.474, 90.692 )
 scale = Vector2( 1.75, 0.25 )
 
-[node name="StaticBody2D03" parent="Collisions" index="1" instance=ExtResource( 12 )]
+[node name="StaticBody2D03" parent="Collisions" index="1" instance=ExtResource( 11 )]
 
 position = Vector2( 56.474, 90.692 )
 scale = Vector2( 1.25, 0.25 )
 
-[node name="StaticBody2D04" parent="Collisions" index="2" instance=ExtResource( 12 )]
+[node name="StaticBody2D04" parent="Collisions" index="2" instance=ExtResource( 11 )]
 
 position = Vector2( 80.474, -53.308 )
 scale = Vector2( 1, 0.25 )
 
-[node name="StaticBody2D05" parent="Collisions" index="3" instance=ExtResource( 12 )]
+[node name="StaticBody2D05" parent="Collisions" index="3" instance=ExtResource( 11 )]
 
 position = Vector2( 200.474, -53.308 )
 scale = Vector2( 1.75, 0.25 )
 
-[node name="StaticBody2D06" parent="Collisions" index="4" instance=ExtResource( 12 )]
+[node name="StaticBody2D06" parent="Collisions" index="4" instance=ExtResource( 11 )]
 
 position = Vector2( 16.474, -85.308 )
 scale = Vector2( 1, 1.25 )
 
-[node name="StaticBody2D07" parent="Collisions" index="5" instance=ExtResource( 12 )]
+[node name="StaticBody2D07" parent="Collisions" index="5" instance=ExtResource( 11 )]
 
 position = Vector2( -143.526, 82.692 )
 scale = Vector2( 1, 1.5 )
 
-[node name="StaticBody2D08" parent="Collisions" index="6" instance=ExtResource( 12 )]
+[node name="StaticBody2D08" parent="Collisions" index="6" instance=ExtResource( 11 )]
 
-position = Vector2( -191.526, -69.308 )
-scale = Vector2( 1, 0.25 )
+position = Vector2( -199.526, -69.308 )
+scale = Vector2( 0.75, 0.25 )
 
-[node name="StaticBody2D12" parent="Collisions" index="7" instance=ExtResource( 12 )]
+[node name="StaticBody2D12" parent="Collisions" index="7" instance=ExtResource( 11 )]
 
 position = Vector2( -71.526, -69.308 )
 scale = Vector2( 1.75, 0.25 )
 
-[node name="StaticBody2D14" parent="Collisions" index="8" instance=ExtResource( 12 )]
+[node name="StaticBody2D14" parent="Collisions" index="8" instance=ExtResource( 11 )]
 
 position = Vector2( 168.474, 106.692 )
 
-[node name="StaticBody2D15" parent="Collisions" index="9" instance=ExtResource( 12 )]
+[node name="StaticBody2D15" parent="Collisions" index="9" instance=ExtResource( 11 )]
 
 position = Vector2( 88.474, 106.692 )
 
-[node name="StaticBody2D16" parent="Collisions" index="10" instance=ExtResource( 12 )]
+[node name="StaticBody2D16" parent="Collisions" index="10" instance=ExtResource( 11 )]
 
 position = Vector2( 8.474, 90.692 )
 scale = Vector2( 0.25, 0.75 )
 
-[node name="StaticBody2D17" parent="Collisions" index="11" instance=ExtResource( 12 )]
+[node name="StaticBody2D17" parent="Collisions" index="11" instance=ExtResource( 11 )]
 
 position = Vector2( 0.473999, 122.692 )
 scale = Vector2( 0.5, 0.25 )
 
 [node name="SolidCollisions" type="Node2D" parent="." index="5"]
 
-[node name="StaticBody2D17" parent="SolidCollisions" index="0" instance=ExtResource( 12 )]
+[node name="StaticBody2D17" parent="SolidCollisions" index="0" instance=ExtResource( 11 )]
 
 position = Vector2( -231.526, -45.308 )
 scale = Vector2( 0.25, 2.5 )
 collision_layer = 1
 collision_mask = 1
 
-[node name="StaticBody2D10" parent="SolidCollisions" index="1" instance=ExtResource( 12 )]
+[node name="StaticBody2D10" parent="SolidCollisions" index="1" instance=ExtResource( 11 )]
 
 position = Vector2( 16.474, -133.308 )
 scale = Vector2( 8, 0.25 )
 collision_layer = 1
 collision_mask = 1
 
-[node name="StaticBody2D11" parent="SolidCollisions" index="2" instance=ExtResource( 12 )]
+[node name="StaticBody2D11" parent="SolidCollisions" index="2" instance=ExtResource( 11 )]
 
 position = Vector2( 264.474, -45.308 )
 scale = Vector2( 0.25, 2.5 )
 collision_layer = 1
 collision_mask = 1
 
-[node name="StaticBody2D12" parent="SolidCollisions" index="3" instance=ExtResource( 12 )]
+[node name="StaticBody2D12" parent="SolidCollisions" index="3" instance=ExtResource( 11 )]
 
 position = Vector2( 264.474, 98.692 )
 scale = Vector2( 0.25, 0.5 )
 collision_layer = 1
 collision_mask = 1
 
-[node name="StaticBody2D13" parent="SolidCollisions" index="4" instance=ExtResource( 12 )]
+[node name="StaticBody2D13" parent="SolidCollisions" index="4" instance=ExtResource( 11 )]
 
 position = Vector2( 16.474, 138.692 )
 scale = Vector2( 8, 0.25 )
 collision_layer = 1
 collision_mask = 1
 
-[node name="StaticBody2D02" parent="SolidCollisions" index="5" instance=ExtResource( 12 )]
+[node name="StaticBody2D02" parent="SolidCollisions" index="5" instance=ExtResource( 11 )]
 
 position = Vector2( 144.474, 122.692 )
 scale = Vector2( 4, 0.25 )
 collision_layer = 1
 collision_mask = 1
 
-[node name="StaticBody2D09" parent="SolidCollisions" index="6" instance=ExtResource( 12 )]
+[node name="StaticBody2D09" parent="SolidCollisions" index="6" instance=ExtResource( 11 )]
 
 position = Vector2( -231.526, 106.692 )
 scale = Vector2( 0.25, 0.75 )
 collision_layer = 1
 collision_mask = 1
+
+[node name="Boy" parent="." index="6" instance=ExtResource( 12 )]
+
+position = Vector2( -79.526, -93.308 )
 
 

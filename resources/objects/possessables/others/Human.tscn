@@ -10,11 +10,7 @@
 script/source = "extends KinematicBody2D
 
 # todo:
-# - can jump (1.5 blocks horizontaly and vertically)
-# - no controll while jumping? (no direction change in midair)
-# - no snapping while falling, normal movement calculation
-# - sounds
-# - dies if movables fall on it
+# - dies if movables falls on it
 # - dying: the player falls over with an animation and sound; the screen fades out and the level resets
 # - some humans have other abilities, which are shown on the sprite; e.g. cannot be possessed
 
@@ -31,16 +27,16 @@ const DEADZONE = 0.25
 var alive = true
 
 # gravity applied on the character
-export var gravity = Vector2(0, 2000)
+export var gravity = Vector2(0, 1000)
 
 # The speed of the human will be multiplied by this value in the span of one second.
-export(float) var friction = 0.00005
+export(float) var friction = 0.00004
 
 # Movement speed in pixels per second.
-export(float) var movement_speed = 1400
+export(float) var movement_speed = 1200
 
 # Jump strength
-export(float) var jump_strength = 16000
+export(float) var jump_strength = 10000
 
 # The current speed of the human.
 var speed = Vector2(0.0, 0.0)
@@ -61,8 +57,6 @@ onready var _animation = get_node(\"AnimationPlayer\")
 func _ready():
 	
 	_animation.play(\"Idle\")
-	
-	pass
 
 func _physics_process(delta):
 	
@@ -78,8 +72,6 @@ func _physics_process(delta):
 			# hit the ground
 			# play sound, etc.
 			
-			emit_signal(\"impact\", speed.x)
-			
 			# human dies, if fallheight is over 2.5 blocks (40 pixel)
 			var fall_height = -(fall_position - global_position.y)
 			
@@ -88,13 +80,11 @@ func _physics_process(delta):
 				print(\"Human died\")
 				alive = false
 		
+		# jump
 		if _p.possessed and alive:
-			# jump
 			if Input.is_action_just_pressed(\"move_up\"):
 				
-				speed.y -= jump_strength * delta
-				
-				pass
+				speed.y = -jump_strength * delta
 		
 		# if on ground and possessed, calculate input direction and speed
 		if _p.possessed and alive:
@@ -235,10 +225,10 @@ collision_mask = 11
 collision/safe_margin = 0.08
 script = SubResource( 1 )
 _sections_unfolded = [ "Collision", "Z Index" ]
-gravity = Vector2( 0, 2000 )
-friction = 5e-005
-movement_speed = 1400
-jump_strength = 16000
+gravity = Vector2( 0, 1000 )
+friction = 4e-005
+movement_speed = 1200
+jump_strength = 10000
 
 [node name="Possessable" parent="." index="0" instance=ExtResource( 1 )]
 

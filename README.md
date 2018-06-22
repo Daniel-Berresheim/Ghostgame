@@ -3,10 +3,14 @@
 Planned Features:
 
 object human:
-- can jump (jumpwidth: ca. 1.5 block; jumpheight: ca. 1.5 blocks)
-- dying animation and sound, screen fades out and level resets
-- can have different textures and abilities, some cannot be possessed and walk on their own
-- can be scared, can run away
+- dies if movables falls on it
+- dying: the player falls over with an animation and sound; the screen fades out and the level resets
+- some humans have other abilities, which are shown on the sprite; e.g. cannot be possessed
+- will be scared of some actions of the player and from movables
+- can run away in fear
+- maybe they have a value of how likely they are to be afraid
+- this value can be raised if it's dark, etc. and through events
+- adults could have a higher resistance to scary things
 
 keyhint interface:
 - design rework
