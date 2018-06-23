@@ -151,11 +151,10 @@ func _deadzone(axis):
 custom_solver_bias = 0.0
 radius = 14.0
 
-[sub_resource type="CapsuleShape2D" id=3]
+[sub_resource type="RectangleShape2D" id=3]
 
 custom_solver_bias = 0.0
-radius = 6.84571
-height = 10.5188
+extents = Vector2( 5.32771, 12.2246 )
 
 [sub_resource type="Animation" id=4]
 

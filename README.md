@@ -6,8 +6,7 @@ object human:
 - dies if movables falls on it
 - dying: the player falls over with an animation and sound; the screen fades out and the level resets
 - some humans have other abilities, which are shown on the sprite; e.g. cannot be possessed
-- will be scared of some actions of the player and from movables
-- can run away in fear
+- will be scared of some actions of the player and from movables and run away
 - maybe they have a value of how likely they are to be afraid
 - this value can be raised if it's dark, etc. and through events
 - adults could have a higher resistance to scary things
@@ -31,9 +30,8 @@ sound behaviour:
 - the direction from which the sound comes should be relative to the ghost instead of the middle of the screen
 
 others:
-- doors and hatchs; three variants of both: 1) possessable, unsolid, the player is able to open them
-											2) unpossessable, unsolid, emitting signals via switches, etc. are required to open them
-											3) unpossessable, solid, only having the required progress points or a key will grant you access
+- doors and hatchs; two variants of both: 1) unpossessable, unsolid, emitting signals via switches, etc. are required to open them
+											2) unpossessable, solid, only having the required progress points or a key will grant you access
 - levers, buttons and pressure_plates, which can emit signals to objects like connected doors
 - marking system, which switch is connected to which door, etc.
 - humans can collect pumpkins, if every human got a pumpkin, the map is cleared and will be brighter
@@ -45,17 +43,16 @@ others:
 - objects, who can only be moved on rails or who automatically move objects on them 
 - locks and keys for doors
 - hide function for ghosts
-- watering plants, etc. to grow new objects
 - pushing blocks
 - static generators, etc. who have changes to the whole house, e.g. turning the electricity on
 - different objects with different moving behaviour 
 - boss level
+- respawn system
 
 Unsolved Bugs:
 
 scene loading:
 - unpossess processes can lead to unloading of the whole scene
-- using the tab scene reset spawns the player at the wrong position; it should be saved where the player entered a scene
 - error messages
 
 
