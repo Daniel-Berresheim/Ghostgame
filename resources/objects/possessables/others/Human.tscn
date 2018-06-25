@@ -66,6 +66,14 @@ func _physics_process(delta):
 	
 	var walking = false
 	
+	# tests for movables on top of the human
+	var collision_up = $\"CollisionUp\".get_overlapping_bodies()
+	collision_up.erase(self)
+	
+	for i in collision_up.size():
+		
+		if collision_up[i].speed.y > 0: die()
+	
 	if on_ground_new:
 		
 		if !on_ground:
@@ -76,11 +84,7 @@ func _physics_process(delta):
 			# human dies, if fallheight is over 2.5 blocks (40 pixel)
 			var fall_height = -(fall_position - global_position.y)
 			
-			if fall_height > 40:
-				if alive:
-					# die
-					$\"AnimationPlayer\".play(\"Die\")
-				alive = false
+			if fall_height > 40: die()
 		
 		# jump
 		if _p.possessed and alive:
@@ -136,6 +140,15 @@ func _physics_process(delta):
 	# moves the player along with the human
 	if _p.possessed: _p.player.global_position = global_position
 
+func die():
+	
+	if alive:
+		
+		$\"AnimationPlayer\".play(\"Die\")
+		alive = false
+		set_collision_layer_bit(3, false)
+		set_collision_mask_bit(3, false)
+	
 func _deadzone(axis):
 	var length = axis.length()
 	
