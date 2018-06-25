@@ -72,15 +72,12 @@ func _physics_process(delta):
 	
 	for i in collision_up.size():
 		
-		if collision_up[i].speed.y > 0: die()
+		# humans die if movables fall on them
+		if collision_up[i].is_in_group(\"Movables\") and collision_up[i].speed.y > 0: die()
 	
 	if on_ground_new:
 		
 		if !on_ground:
-			
-			# hit the ground
-			# play sound, etc.
-			
 			# human dies, if fallheight is over 2.5 blocks (40 pixel)
 			var fall_height = -(fall_position - global_position.y)
 			
@@ -252,7 +249,7 @@ tracks/1/keys = {
 [sub_resource type="RectangleShape2D" id=7]
 
 custom_solver_bias = 0.0
-extents = Vector2( 5, 0.5 )
+extents = Vector2( 5, 1 )
 
 [node name="Human" type="KinematicBody2D" index="0"]
 

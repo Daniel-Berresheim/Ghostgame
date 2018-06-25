@@ -4,8 +4,4 @@
 
 [node name="Boy" index="0" instance=ExtResource( 1 )]
 
-[node name="Possessable" parent="." index="0"]
-
-_sections_unfolded = [ "Collision" ]
-
 
