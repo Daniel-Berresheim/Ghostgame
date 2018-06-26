@@ -46,7 +46,7 @@ others:
 - static generators, etc. who have changes to the whole house, e.g. turning the electricity on
 - different objects with different moving behaviour 
 - boss level
-- respawn system
+- reset system, only current room, save some progress
 
 Unsolved Bugs:
 
