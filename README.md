@@ -3,7 +3,6 @@
 Planned Features:
 
 object human:
-- dies if movables falls on it
 - dying: the player falls over with an animation and sound; the screen fades out and the level resets
 - some humans have other abilities, which are shown on the sprite; e.g. cannot be possessed
 - will be scared of some actions of the player and from movables and run away

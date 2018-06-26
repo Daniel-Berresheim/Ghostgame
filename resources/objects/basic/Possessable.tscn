@@ -144,6 +144,12 @@ func _input(event):
 			if player.can_switch:
 				var areas = player.get_node(\"GhostArea\").get_overlapping_areas()
 				areas.erase(self)
+				
+				var i = 0
+				while i < areas.size():
+					if !areas[i].is_in_group(\"Possessables\"): 
+						areas.remove(i)
+					else: i+=1
 			
 				if areas.size() > 0:
 					unpossess()
@@ -151,6 +157,8 @@ func _input(event):
 					player._possessible_index += 0.5
 					player.can_switch = false
 					areas[int(player._possessible_index) % areas.size()].possess(player)
+					
+					pass
 	
 	
 	"
@@ -201,7 +209,9 @@ tracks/0/keys = {
 "values": [ 0, 1 ]
 }
 
-[node name="Possessable" type="Area2D" index="0"]
+[node name="Possessable" type="Area2D" index="0" groups=[
+"Possessables",
+]]
 
 position = Vector2( 1, 1 )
 input_pickable = true
@@ -254,6 +264,7 @@ area_mask = 1
 
 [node name="MSG_Possess" type="Node2D" parent="." index="1"]
 
+visible = false
 z_index = 10
 script = SubResource( 2 )
 _sections_unfolded = [ "Transform", "Z Index" ]
