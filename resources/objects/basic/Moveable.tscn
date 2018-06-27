@@ -51,14 +51,14 @@ func _physics_process(delta):
 		# - moving this code block to another position to save performance
 		
 		# currently useless! - detects nearby movables
-		var bodies = get_node(\"DetectionArea\").get_overlapping_bodies()
-		bodies.erase(self)
+		#var bodies = get_node(\"DetectionArea\").get_overlapping_bodies()
+		#bodies.erase(self)
 		
-		var i = 0
-		while i < bodies.size():
-			if !bodies[i].is_in_group(\"Movables\"): 
-				bodies.remove(i)
-			else: i+=1
+		#var i = 0
+		#while i < bodies.size():
+		#	if !bodies[i].is_in_group(\"Movables\"): 
+		#		bodies.remove(i)
+		#	else: i+=1
 		
 		
 		# if the object was falling and hits the ground, it stops playing a falling sound and an impact sound occures
