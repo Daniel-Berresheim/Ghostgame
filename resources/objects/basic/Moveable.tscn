@@ -9,7 +9,7 @@ script/source = "extends KinematicBody2D
 # Deadzone of controller axis.
 const DEADZONE = 0.25
 
-export var gravity = Vector2(0, 5000)
+export var gravity = Vector2(0, 1600)
 
 # Movement speed in pixels per second.
 export(float) var movement_speed = 1100
@@ -94,10 +94,10 @@ func _physics_process(delta):
 	
 	on_ground = on_ground_new
 	
-	speed *= pow(friction, delta)
+	speed.x *= pow(friction, delta)
 	
 	actual_movement = global_position
-	move_and_slide(speed, Vector2(0, -1))
+	speed = move_and_slide(speed, Vector2(0, -1))
 	actual_movement = (actual_movement - global_position) / delta
 	
 	# moves the player along with the object it possesses
@@ -133,7 +133,7 @@ collision_mask = 11
 collision/safe_margin = 0.08
 script = SubResource( 1 )
 _sections_unfolded = [ "Collision" ]
-gravity = Vector2( 0, 5000 )
+gravity = Vector2( 0, 1600 )
 movement_speed = 1100
 friction = 2e-005
 

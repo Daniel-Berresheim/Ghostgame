@@ -57,14 +57,14 @@ class Area:
 			self.scene_instance = self.scene.instance()
 			self.scene_instance.global_position += pos * ROOM_SIZE
 			root_node.add_child(self.scene_instance)
-			print(\"Loaded scene \" + str(pos))
+			#print(\"Loaded scene \" + str(pos))
 			
 	
 	func unload():
 		root_node.areas.erase(self)
 		if scene_instance != null:
 			root_node.remove_child(scene_instance)
-		print(\"Unloaded scene \" + str(pos))
+		#print(\"Unloaded scene \" + str(pos))
 		
 
 # general input events for settings

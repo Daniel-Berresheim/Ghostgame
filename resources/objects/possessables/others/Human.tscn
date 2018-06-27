@@ -27,16 +27,17 @@ const DEADZONE = 0.25
 var alive = true
 
 # gravity applied on the character
-export var gravity = Vector2(0, 1000)
+export var gravity = Vector2(0, 1400)
 
 # The speed of the human will be multiplied by this value in the span of one second.
-export(float) var friction = 0.00004
+export(float) var friction = 0.000025
+export(float) var air_friction = 0.000010
 
 # Movement speed in pixels per second.
 export(float) var movement_speed = 1200
 
 # Jump strength
-export(float) var jump_strength = 10000
+export(float) var jump_strength = 12000
 
 # The current speed of the human.
 var speed = Vector2(0.0, 0.0)
@@ -88,17 +89,19 @@ func _physics_process(delta):
 				
 				speed.y = -jump_strength * delta
 		
-		# if on ground and possessed, calculate input direction and speed
-		if _p.possessed and alive:
-			var analog = _deadzone(Vector2(Input.get_joy_axis(0, JOY_AXIS_0), 0))
-			if analog != Vector2():
-				speed += analog * movement_speed * delta
+	# if on ground and possessed, calculate input direction and speed
+	if _p.possessed and alive:
+		var analog = _deadzone(Vector2(Input.get_joy_axis(0, JOY_AXIS_0), 0))
+		if analog != Vector2():
+			speed += analog * movement_speed * delta
+			if on_ground_new: 
 				walking = true
-			else:
-				if Input.is_action_pressed(\"move_right\") or Input.is_action_pressed(\"move_left\"):
-					var dir = Vector2()
-					dir.x += int(Input.is_action_pressed(\"move_right\")) - int(Input.is_action_pressed(\"move_left\"))
-					speed += dir.normalized() * movement_speed * delta
+		else:
+			if Input.is_action_pressed(\"move_right\") or Input.is_action_pressed(\"move_left\"):
+				var dir = Vector2()
+				dir.x += int(Input.is_action_pressed(\"move_right\")) - int(Input.is_action_pressed(\"move_left\"))
+				speed += dir.normalized() * movement_speed * delta
+				if on_ground_new: 
 					walking = true
 			
 	# animation
@@ -123,14 +126,13 @@ func _physics_process(delta):
 		
 		speed += gravity * delta
 		
-	if on_ground_new:
-		
-		speed *= pow(friction, delta)	
+	if on_ground_new: speed.x *= pow(friction, delta)	
+	else: speed.x *= pow(air_friction, delta)
 	
 	on_ground = on_ground_new
 	
 	actual_movement = global_position
-	move_and_slide(speed, Vector2(0, -1))
+	speed = move_and_slide(speed, Vector2(0, -1))
 	actual_movement = (actual_movement - global_position) / delta
 	
 	# moves the player along with the human
@@ -265,10 +267,11 @@ collision_mask = 11
 collision/safe_margin = 0.08
 script = SubResource( 1 )
 _sections_unfolded = [ "Collision", "Z Index" ]
-gravity = Vector2( 0, 1000 )
-friction = 4e-005
+gravity = Vector2( 0, 1400 )
+friction = 2.5e-005
+air_friction = 1e-005
 movement_speed = 1200
-jump_strength = 10000
+jump_strength = 12000
 
 [node name="Possessable" parent="." index="0" instance=ExtResource( 1 )]
 

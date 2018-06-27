@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://resources/objects/basic/LevelProperties.tscn" type="PackedScene" id=1]
 [ext_resource path="res://resources/music/levels/SpookyTest.ogg" type="AudioStream" id=2]
@@ -6,12 +6,13 @@
 [ext_resource path="res://resources/tilemaps/TileMapBlocks.tscn" type="PackedScene" id=4]
 [ext_resource path="res://resources/objects/possessables/rigid/Clock.tscn" type="PackedScene" id=5]
 [ext_resource path="res://resources/objects/possessables/movables/Crate.tscn" type="PackedScene" id=6]
-[ext_resource path="res://resources/objects/possessables/movables/Barrel.tscn" type="PackedScene" id=7]
-[ext_resource path="res://resources/objects/possessables/rigid/Lamp.tscn" type="PackedScene" id=8]
-[ext_resource path="res://resources/objects/others/IronCrate.tscn" type="PackedScene" id=9]
-[ext_resource path="res://resources/objects/others/Pumpkin.tscn" type="PackedScene" id=10]
-[ext_resource path="res://resources/collisions/RectangleBody.tscn" type="PackedScene" id=11]
-[ext_resource path="res://resources/objects/possessables/others/Boy.tscn" type="PackedScene" id=12]
+[ext_resource path="res://resources/objects/possessables/movables/SmallCrate.tscn" type="PackedScene" id=7]
+[ext_resource path="res://resources/objects/possessables/movables/Barrel.tscn" type="PackedScene" id=8]
+[ext_resource path="res://resources/objects/possessables/rigid/Lamp.tscn" type="PackedScene" id=9]
+[ext_resource path="res://resources/objects/others/IronCrate.tscn" type="PackedScene" id=10]
+[ext_resource path="res://resources/objects/others/Pumpkin.tscn" type="PackedScene" id=11]
+[ext_resource path="res://resources/collisions/RectangleBody.tscn" type="PackedScene" id=12]
+[ext_resource path="res://resources/objects/possessables/others/Boy.tscn" type="PackedScene" id=13]
 
 [node name="World" type="Node2D" index="0"]
 
@@ -74,58 +75,64 @@ position = Vector2( 472, 208 )
 
 position = Vector2( 464, 64 )
 
-[node name="Barrels" type="Node2D" parent="Objects" index="2"]
+[node name="SmallCrates" type="Node2D" parent="Objects" index="2"]
+
+[node name="SmallCrate" parent="Objects/SmallCrates" index="0" instance=ExtResource( 7 )]
+
+position = Vector2( 24, 56 )
+
+[node name="Barrels" type="Node2D" parent="Objects" index="3"]
 
 __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="Barrel" parent="Objects/Barrels" index="0" instance=ExtResource( 7 )]
+[node name="Barrel" parent="Objects/Barrels" index="0" instance=ExtResource( 8 )]
 
 position = Vector2( 200, 48 )
 
-[node name="Lamps" type="Node2D" parent="Objects" index="3"]
+[node name="Lamps" type="Node2D" parent="Objects" index="4"]
 
 __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="Lamp" parent="Objects/Lamps" index="0" instance=ExtResource( 8 )]
+[node name="Lamp" parent="Objects/Lamps" index="0" instance=ExtResource( 9 )]
 
 position = Vector2( 128, 64 )
 
-[node name="Lamp2" parent="Objects/Lamps" index="1" instance=ExtResource( 8 )]
+[node name="Lamp2" parent="Objects/Lamps" index="1" instance=ExtResource( 9 )]
 
 position = Vector2( 312, 80 )
 
-[node name="Lamp3" parent="Objects/Lamps" index="2" instance=ExtResource( 8 )]
+[node name="Lamp3" parent="Objects/Lamps" index="2" instance=ExtResource( 9 )]
 
 position = Vector2( 304, 224 )
 
-[node name="Lamp4" parent="Objects/Lamps" index="3" instance=ExtResource( 8 )]
+[node name="Lamp4" parent="Objects/Lamps" index="3" instance=ExtResource( 9 )]
 
 position = Vector2( 280, 224 )
 
-[node name="Lamp5" parent="Objects/Lamps" index="4" instance=ExtResource( 8 )]
+[node name="Lamp5" parent="Objects/Lamps" index="4" instance=ExtResource( 9 )]
 
 position = Vector2( 416, 224 )
 
-[node name="Lamp6" parent="Objects/Lamps" index="5" instance=ExtResource( 8 )]
+[node name="Lamp6" parent="Objects/Lamps" index="5" instance=ExtResource( 9 )]
 
 position = Vector2( 24, 272 )
 
-[node name="IronCrates" type="Node2D" parent="Objects" index="4"]
+[node name="IronCrates" type="Node2D" parent="Objects" index="5"]
 
 editor/display_folded = true
 __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="IronCrate" parent="Objects/IronCrates" index="0" instance=ExtResource( 9 )]
+[node name="IronCrate" parent="Objects/IronCrates" index="0" instance=ExtResource( 10 )]
 
 position = Vector2( 208, 256 )
 
-[node name="Pumpkin" parent="Objects" index="5" instance=ExtResource( 10 )]
+[node name="Pumpkin" parent="Objects" index="6" instance=ExtResource( 11 )]
 
 position = Vector2( 408, 64 )
 
@@ -135,120 +142,120 @@ __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="StaticBody2D01" parent="Collisions" index="0" instance=ExtResource( 11 )]
+[node name="StaticBody2D01" parent="Collisions" index="0" instance=ExtResource( 12 )]
 
 position = Vector2( 200.474, 90.692 )
 scale = Vector2( 1.75, 0.25 )
 
-[node name="StaticBody2D03" parent="Collisions" index="1" instance=ExtResource( 11 )]
+[node name="StaticBody2D03" parent="Collisions" index="1" instance=ExtResource( 12 )]
 
 position = Vector2( 56.474, 90.692 )
 scale = Vector2( 1.25, 0.25 )
 
-[node name="StaticBody2D04" parent="Collisions" index="2" instance=ExtResource( 11 )]
+[node name="StaticBody2D04" parent="Collisions" index="2" instance=ExtResource( 12 )]
 
 position = Vector2( 80.474, -53.308 )
 scale = Vector2( 1, 0.25 )
 
-[node name="StaticBody2D05" parent="Collisions" index="3" instance=ExtResource( 11 )]
+[node name="StaticBody2D05" parent="Collisions" index="3" instance=ExtResource( 12 )]
 
 position = Vector2( 200.474, -53.308 )
 scale = Vector2( 1.75, 0.25 )
 
-[node name="StaticBody2D06" parent="Collisions" index="4" instance=ExtResource( 11 )]
+[node name="StaticBody2D06" parent="Collisions" index="4" instance=ExtResource( 12 )]
 
 position = Vector2( 16.474, -85.308 )
 scale = Vector2( 1, 1.25 )
 
-[node name="StaticBody2D07" parent="Collisions" index="5" instance=ExtResource( 11 )]
+[node name="StaticBody2D07" parent="Collisions" index="5" instance=ExtResource( 12 )]
 
 position = Vector2( -143.526, 82.692 )
 scale = Vector2( 1, 1.5 )
 
-[node name="StaticBody2D08" parent="Collisions" index="6" instance=ExtResource( 11 )]
+[node name="StaticBody2D08" parent="Collisions" index="6" instance=ExtResource( 12 )]
 
 position = Vector2( -199.526, -69.308 )
 scale = Vector2( 0.75, 0.25 )
 
-[node name="StaticBody2D12" parent="Collisions" index="7" instance=ExtResource( 11 )]
+[node name="StaticBody2D12" parent="Collisions" index="7" instance=ExtResource( 12 )]
 
 position = Vector2( -71.526, -69.308 )
 scale = Vector2( 1.75, 0.25 )
 
-[node name="StaticBody2D14" parent="Collisions" index="8" instance=ExtResource( 11 )]
+[node name="StaticBody2D14" parent="Collisions" index="8" instance=ExtResource( 12 )]
 
 position = Vector2( 168.474, 106.692 )
 
-[node name="StaticBody2D15" parent="Collisions" index="9" instance=ExtResource( 11 )]
+[node name="StaticBody2D15" parent="Collisions" index="9" instance=ExtResource( 12 )]
 
 position = Vector2( 88.474, 106.692 )
 
-[node name="StaticBody2D16" parent="Collisions" index="10" instance=ExtResource( 11 )]
+[node name="StaticBody2D16" parent="Collisions" index="10" instance=ExtResource( 12 )]
 
 position = Vector2( 8.474, 90.692 )
 scale = Vector2( 0.25, 0.75 )
 
-[node name="StaticBody2D17" parent="Collisions" index="11" instance=ExtResource( 11 )]
+[node name="StaticBody2D17" parent="Collisions" index="11" instance=ExtResource( 12 )]
 
 position = Vector2( 0.473999, 122.692 )
 scale = Vector2( 0.5, 0.25 )
 
 [node name="SolidCollisions" type="Node2D" parent="." index="5"]
 
-[node name="StaticBody2D17" parent="SolidCollisions" index="0" instance=ExtResource( 11 )]
+[node name="StaticBody2D17" parent="SolidCollisions" index="0" instance=ExtResource( 12 )]
 
 position = Vector2( -231.526, -45.308 )
 scale = Vector2( 0.25, 2.5 )
 collision_layer = 1
 collision_mask = 1
 
-[node name="StaticBody2D10" parent="SolidCollisions" index="1" instance=ExtResource( 11 )]
+[node name="StaticBody2D10" parent="SolidCollisions" index="1" instance=ExtResource( 12 )]
 
 position = Vector2( 16.474, -133.308 )
 scale = Vector2( 8, 0.25 )
 collision_layer = 1
 collision_mask = 1
 
-[node name="StaticBody2D11" parent="SolidCollisions" index="2" instance=ExtResource( 11 )]
+[node name="StaticBody2D11" parent="SolidCollisions" index="2" instance=ExtResource( 12 )]
 
 position = Vector2( 264.474, -45.308 )
 scale = Vector2( 0.25, 2.5 )
 collision_layer = 1
 collision_mask = 1
 
-[node name="StaticBody2D12" parent="SolidCollisions" index="3" instance=ExtResource( 11 )]
+[node name="StaticBody2D12" parent="SolidCollisions" index="3" instance=ExtResource( 12 )]
 
 position = Vector2( 264.474, 98.692 )
 scale = Vector2( 0.25, 0.5 )
 collision_layer = 1
 collision_mask = 1
 
-[node name="StaticBody2D13" parent="SolidCollisions" index="4" instance=ExtResource( 11 )]
+[node name="StaticBody2D13" parent="SolidCollisions" index="4" instance=ExtResource( 12 )]
 
 position = Vector2( 16.474, 138.692 )
 scale = Vector2( 8, 0.25 )
 collision_layer = 1
 collision_mask = 1
 
-[node name="StaticBody2D02" parent="SolidCollisions" index="5" instance=ExtResource( 11 )]
+[node name="StaticBody2D02" parent="SolidCollisions" index="5" instance=ExtResource( 12 )]
 
 position = Vector2( 144.474, 122.692 )
 scale = Vector2( 4, 0.25 )
 collision_layer = 1
 collision_mask = 1
 
-[node name="StaticBody2D09" parent="SolidCollisions" index="6" instance=ExtResource( 11 )]
+[node name="StaticBody2D09" parent="SolidCollisions" index="6" instance=ExtResource( 12 )]
 
 position = Vector2( -231.526, 106.692 )
 scale = Vector2( 0.25, 0.75 )
 collision_layer = 1
 collision_mask = 1
 
-[node name="Boy" parent="." index="6" instance=ExtResource( 12 )]
+[node name="Boy" parent="." index="6" instance=ExtResource( 13 )]
 
 position = Vector2( -79.526, -93.308 )
 
-[node name="Boy2" parent="." index="7" instance=ExtResource( 12 )]
+[node name="Boy2" parent="." index="7" instance=ExtResource( 13 )]
 
 position = Vector2( -149.526, -41.308 )
 
