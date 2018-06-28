@@ -138,6 +138,7 @@ func _process(delta):
 func _input(event):
 	
 	# Enable the player to switch between objects in range
+	# Move to ghost, use groups
 	if !Engine.editor_hint:
 		
 		if possessed and event.is_action_pressed(\"switch_possessale\"): 
@@ -157,8 +158,6 @@ func _input(event):
 					player._possessible_index += 0.5
 					player.can_switch = false
 					areas[int(player._possessible_index) % areas.size()].possess(player)
-					
-					pass
 	
 	
 	"
@@ -226,8 +225,6 @@ _sections_unfolded = [ "Collision" ]
 msg_posses_offset = Vector2( 0, 0 )
 
 [node name="Sounds" type="Node2D" parent="." index="0"]
-
-editor/display_folded = true
 
 [node name="Possess" type="AudioStreamPlayer2D" parent="Sounds" index="0"]
 

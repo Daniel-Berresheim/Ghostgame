@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://resources/objects/basic/Possessable.tscn" type="PackedScene" id=1]
 
@@ -49,17 +49,6 @@ func _physics_process(delta):
 		# - moving other Movables by pushing them
 		# - moving other Movables if they are on top of another moving Movable
 		# - moving this code block to another position to save performance
-		
-		# currently useless! - detects nearby movables
-		#var bodies = get_node(\"DetectionArea\").get_overlapping_bodies()
-		#bodies.erase(self)
-		
-		#var i = 0
-		#while i < bodies.size():
-		#	if !bodies[i].is_in_group(\"Movables\"): 
-		#		bodies.remove(i)
-		#	else: i+=1
-		
 		
 		# if the object was falling and hits the ground, it stops playing a falling sound and an impact sound occures
 		if not on_ground:
@@ -118,11 +107,6 @@ func _deadzone(axis):
 custom_solver_bias = 0.0
 radius = 24.0
 
-[sub_resource type="RectangleShape2D" id=3]
-
-custom_solver_bias = 0.0
-extents = Vector2( 36, 36 )
-
 [node name="Moveable" type="KinematicBody2D" index="0" groups=[
 "Movables",
 ]]
@@ -142,20 +126,5 @@ friction = 2e-005
 [node name="PossessArea" type="CollisionShape2D" parent="Possessable" index="1"]
 
 shape = SubResource( 2 )
-
-[node name="DetectionArea" type="Area2D" parent="." index="1"]
-
-input_pickable = true
-gravity_vec = Vector2( 0, 1 )
-gravity = 98.0
-linear_damp = 0.1
-angular_damp = 1.0
-audio_bus_override = false
-audio_bus_name = "Master"
-_sections_unfolded = [ "Collision" ]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea" index="0"]
-
-shape = SubResource( 3 )
 
 

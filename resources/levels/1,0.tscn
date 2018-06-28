@@ -134,7 +134,7 @@ position = Vector2( 208, 256 )
 
 [node name="Pumpkin" parent="Objects" index="6" instance=ExtResource( 11 )]
 
-position = Vector2( 408, 64 )
+position = Vector2( 440, 208 )
 
 [node name="Collisions" type="Node2D" parent="." index="4"]
 
@@ -254,9 +254,5 @@ collision_mask = 1
 [node name="Boy" parent="." index="6" instance=ExtResource( 13 )]
 
 position = Vector2( -79.526, -93.308 )
-
-[node name="Boy2" parent="." index="7" instance=ExtResource( 13 )]
-
-position = Vector2( -149.526, -41.308 )
 
 

@@ -21,7 +21,7 @@ new object doors, trapdoors, switches, buttons and pressure_plates:
 4) doors and trapdoors:
 - doors are three blocks tall and trapdoors are three blocks wide
 - if a signal emitter with the same color is active, they will open
-- can be converted, that you have to give a signal to close them
+- can be inverted, that you have to give a signal to close them
 - there should be an iron version of this doors, where the ghost cannot pass through them
 5) later, there should be other doors, which only open, if the player collected a specific amount of items
 6) later, there should be special switches, which can be pressed by the ghost and change properties of the whole world (e.g. activate/deactivate lights in the house)

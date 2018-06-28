@@ -52,7 +52,7 @@ _sections_unfolded = [ "Collision", "Z Index", "collision" ]
 
 [node name="Possessable" parent="." index="0"]
 
-msg_posses_offset = Vector2( 0, -24 )
+msg_posses_offset = Vector2( 0, -16 )
 
 [node name="Sprite" type="Sprite" parent="." index="1"]
 
