@@ -134,32 +134,6 @@ func _process(delta):
 		if _editor_hint_msg_possess_time <= 0:
 			$\"MSG_Possess\".hide()
 			set_process(false)
-	
-func _input(event):
-	
-	# Enable the player to switch between objects in range
-	# Move to ghost, use groups
-	if !Engine.editor_hint:
-		
-		if possessed and event.is_action_pressed(\"switch_possessale\"): 
-			if player.can_switch:
-				var areas = player.get_node(\"GhostArea\").get_overlapping_areas()
-				areas.erase(self)
-				
-				var i = 0
-				while i < areas.size():
-					if !areas[i].is_in_group(\"Possessables\"): 
-						areas.remove(i)
-					else: i+=1
-			
-				if areas.size() > 0:
-					unpossess()
-					
-					player._possessible_index += 0.5
-					player.can_switch = false
-					areas[int(player._possessible_index) % areas.size()].possess(player)
-	
-	
 	"
 
 [sub_resource type="GDScript" id=2]

@@ -78,9 +78,30 @@ func _input(event):
 	# Changes the possessable object
 	if event.is_action_pressed(\"switch_possessale\"):
 		
-		can_switch = true
+		# change the selected object
+		if state == STATE_IDLE:
 		
-		if state != STATE_POSSESSING: _possessible_index += 1
+			can_switch = true
+			if state != STATE_POSSESSING: _possessible_index += 1
+		
+		# change between objects while possessing
+		elif state == STATE_POSSESSING:
+			
+			var areas = get_tree().get_nodes_in_group(\"Possessables\")
+			var ghost = get_node(\"GhostArea\")
+		
+			var i = 0
+			while i < areas.size():
+				if areas[i].possessed == true or !areas[i].overlaps_area(ghost):
+					areas.remove(i)
+				else: i+=1
+		
+			if areas.size() > 0:
+				unpossess()
+			
+				_possessible_index += 0.5
+				can_switch = false
+				areas[int(_possessible_index) % areas.size()].possess(self)
 		
 	# Enables the Ghost to possess other objects
 	if event.is_action_pressed(\"possess\"):
@@ -102,6 +123,7 @@ func _input(event):
 		
 		if is_fullscreen: OS.set_window_fullscreen(true)
 		else: OS.set_window_fullscreen(false)
+		
 
 func _physics_process(delta):
 	
