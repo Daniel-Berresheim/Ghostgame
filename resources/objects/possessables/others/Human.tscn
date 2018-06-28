@@ -73,7 +73,7 @@ func _physics_process(delta):
 	for i in collision_up.size():
 		
 		# humans die if movables fall on them
-		if collision_up[i].is_in_group(\"Movables\") and collision_up[i].speed.y > 0: die()
+		if collision_up[i].is_in_group(\"Movables\") and !collision_up[i].speed.y < 0: die()
 	
 	if on_ground_new:
 		
