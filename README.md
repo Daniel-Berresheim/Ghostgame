@@ -2,10 +2,8 @@
 
 Planned Features:
 
-new object doors, trapdoors, switches, buttons and pressure_plates:
-- all objects are not possessable or movable
+object doors, trapdoors, switches, buttons and pressure_plates:
 - have a color code, doors open, if signals with the same color are active
-- if there are more than one signal emitter at the same time, they will work like they are linked with an OR, if at least one gives a signal, the doors will open
 1) buttons:
 - attached to walls 
 - can be activated by humans
@@ -104,8 +102,8 @@ Z Index:
 -1	background_color
 0	background_texture
 1	clock
-2	-
-3	-
+2	emitter
+3	receiver
 4	iron_crate
 5	crate; barrel
 6	lamp

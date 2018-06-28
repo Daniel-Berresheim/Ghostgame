@@ -109,9 +109,10 @@ collision_mask = 1
 [node name="PressurePlate" parent="." index="5" instance=ExtResource( 12 )]
 
 position = Vector2( 232, 272 )
+z_index = 0
 color_channel = 0
 
-[node name="Receiver" parent="." index="6" groups=[
+[node name="Door" parent="." index="6" groups=[
 "Emitter",
 ] instance=ExtResource( 13 )]
 

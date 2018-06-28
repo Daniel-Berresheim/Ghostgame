@@ -37,7 +37,9 @@ func toggle():
 "Emitter",
 ]]
 
+z_index = 2
 script = SubResource( 1 )
+_sections_unfolded = [ "Z Index" ]
 color_channel = null
 active = null
 

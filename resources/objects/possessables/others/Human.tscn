@@ -258,7 +258,9 @@ tracks/1/keys = {
 custom_solver_bias = 0.0
 extents = Vector2( 5, 1 )
 
-[node name="Human" type="KinematicBody2D" index="0"]
+[node name="Human" type="KinematicBody2D" index="0" groups=[
+"Humans",
+]]
 
 z_index = 7
 input_pickable = false
