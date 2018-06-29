@@ -116,6 +116,7 @@ z_index = 0
 ] instance=ExtResource( 13 )]
 
 position = Vector2( 320, 248 )
+inverted = true
 
 [node name="TrapDoor" parent="." index="7" instance=ExtResource( 14 )]
 
