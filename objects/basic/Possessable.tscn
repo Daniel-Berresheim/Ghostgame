@@ -1,0 +1,263 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://sounds/Possess.wav" type="AudioStream" id=1]
+[ext_resource path="res://sounds/Unpossess.wav" type="AudioStream" id=2]
+[ext_resource path="res://sounds/Possessable.wav" type="AudioStream" id=3]
+[ext_resource path="res://textures/ui/Possess.png" type="Texture" id=4]
+
+[sub_resource type="GDScript" id=1]
+
+script/source = "tool
+extends Area2D
+
+var _msg_possess_offset = Vector2(0, 0)
+export(Vector2) var msg_posses_offset = Vector2(0, 0) setget set_msg_possess_offset, get_msg_possess_offset
+
+# True, if possessed by the player.
+var possessed = false
+
+# Set to the player that is possessing this object.
+var player = null
+
+var _editor_hint_msg_possess_time = 0.0
+var _is_ready = false
+
+# Possess this object by the given player node.
+func possess(player):
+	
+	if  !Engine.editor_hint:
+		
+		if self.player != null and self.player.possessed_object != null:
+				self.player.possessed_object.unpossess()
+		
+		self.player = player
+		player.state = player.STATE_POSSESSING
+		player.possessed_object = self
+		possessed = true
+		_center_player_pos(player)
+		$\"Sounds/Possess\".play()
+		emit_signal(\"possessed\", player)
+	
+	$\"MSG_Possess\".hide()
+
+# Unpossesses this object.
+func unpossess():
+	
+	if  !Engine.editor_hint:
+	
+		# Object must be possessed
+		if possessed and player != null:
+			player.possessed_object = null
+			possessed = false
+			_center_player_pos(player)
+			$\"Sounds/Possess\".stop()
+			$\"Sounds/Unpossess\".play()
+			emit_signal(\"unpossessed\", player)
+			
+			player.state = player.STATE_IDLE
+			
+			# reset player possess list
+			player._possessables_in_range = player.get_node(\"GhostArea\").get_overlapping_areas()
+			
+			# Filter non-possessables
+			var j = 0
+			for i in range(0, player._possessables_in_range.size()):
+				if player._possessables_in_range[i + j].name != \"Possessable\":
+					player._possessables_in_range.remove(i + j)
+					j -= 1
+	
+	$\"MSG_Possess\".hide()
+
+func _exit_tree():
+	unpossess()
+
+func set_msg_possess_offset(value):
+	_msg_possess_offset = value
+	
+	if is_inside_tree():
+		if Engine.editor_hint:
+			$\"MSG_Possess\".show()
+			_editor_hint_msg_possess_time = 1
+			set_process(true)
+		
+		$\"MSG_Possess\".position = value
+
+func get_msg_possess_offset():
+	return _msg_possess_offset
+
+func _ready():
+	add_user_signal(\"possessed\", [\"player\"])
+	add_user_signal(\"unpossessed\", [\"player\"])
+	
+	connect(\"area_entered\", self, \"_area_entered\")
+	connect(\"area_exited\", self, \"_area_exited\")
+	
+	$\"MSG_Possess\".hide()
+	set_process(false)
+	
+	# Apply msg_possess_offset (since its setter will be executed before the node is ready).
+	set_msg_possess_offset(_msg_possess_offset)
+
+func _center_player_pos(player):
+	player.global_position = global_position
+	# Update the private position as well.
+	# TODO (Joex3): Maybe refactor into function in res://resources/entities/Ghost.tscn?
+	player._position = player.position
+
+func _area_entered(area):
+	if area.name == \"GhostArea\" and !Engine.editor_hint:
+		# Player node is the parent of the area.
+		var player = area.get_parent()
+		player._possessables_in_range.push_back(self)
+		
+		if not player.state == player.STATE_POSSESSING:
+			if player._possessables_in_range.size() == 1 and not player.state == player.STATE_POSSESSING:
+				$\"Sounds/Possessable\".play()
+				
+	$\"MSG_Possess\".hide();
+	
+func _area_exited(area):
+	if area.name == \"GhostArea\" and !Engine.editor_hint:
+		# Player node is the parent of the area.
+		var player = area.get_parent()
+		player._possessables_in_range.erase(self)
+		
+		if not player.state == player.STATE_POSSESSING:
+			
+			if player._possessables_in_range.size() == 0:
+				player = null
+	$\"MSG_Possess\".hide()
+
+func _process(delta):
+	if Engine.editor_hint:
+		_editor_hint_msg_possess_time -= delta
+		if _editor_hint_msg_possess_time <= 0:
+			$\"MSG_Possess\".hide()
+			set_process(false)
+	"
+
+[sub_resource type="GDScript" id=2]
+
+script/source = "extends Node2D
+
+onready var anim = $\"Possess/AnimationPlayer\"
+
+func ready():
+	hide();
+	
+func show():
+	if !visible:
+		visible = true
+		if anim != null:
+			anim.play(\"Idle\")
+
+func hide():
+	if visible:
+		visible = false
+		if anim != null:
+			anim.stop()"
+
+[sub_resource type="CanvasItemMaterial" id=3]
+
+render_priority = 0
+blend_mode = 0
+light_mode = 1
+
+[sub_resource type="Animation" id=4]
+
+resource_name = "Idle"
+length = 1.0
+loop = true
+step = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 0, 1 ]
+}
+
+[node name="Possessable" type="Area2D" index="0" groups=[
+"Possessables",
+]]
+
+position = Vector2( 1, 1 )
+input_pickable = true
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+audio_bus_override = false
+audio_bus_name = "Master"
+script = SubResource( 1 )
+_sections_unfolded = [ "Collision" ]
+msg_posses_offset = Vector2( 0, 0 )
+
+[node name="Sounds" type="Node2D" parent="." index="0"]
+
+[node name="Possess" type="AudioStreamPlayer2D" parent="Sounds" index="0"]
+
+stream = ExtResource( 1 )
+volume_db = 0.0
+pitch_scale = 1.0
+autoplay = false
+max_distance = 2000.0
+attenuation = 1.0
+bus = "Effects"
+area_mask = 1
+
+[node name="Unpossess" type="AudioStreamPlayer2D" parent="Sounds" index="1"]
+
+stream = ExtResource( 2 )
+volume_db = 0.0
+pitch_scale = 1.0
+autoplay = false
+max_distance = 2000.0
+attenuation = 1.0
+bus = "Effects"
+area_mask = 1
+
+[node name="Possessable" type="AudioStreamPlayer2D" parent="Sounds" index="2"]
+
+stream = ExtResource( 3 )
+volume_db = -3.0
+pitch_scale = 1.0
+autoplay = false
+max_distance = 2000.0
+attenuation = 1.0
+bus = "Effects"
+area_mask = 1
+
+[node name="MSG_Possess" type="Node2D" parent="." index="1"]
+
+z_index = 10
+script = SubResource( 2 )
+_sections_unfolded = [ "Transform", "Z Index" ]
+
+[node name="Possess" type="Sprite" parent="MSG_Possess" index="0"]
+
+light_mask = 0
+material = SubResource( 3 )
+z_index = 10
+z_as_relative = false
+texture = ExtResource( 4 )
+vframes = 2
+frame = 1
+_sections_unfolded = [ "Animation", "Material", "Transform", "Visibility", "Z Index" ]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="MSG_Possess/Possess" index="0"]
+
+root_node = NodePath("..")
+autoplay = ""
+playback_process_mode = 1
+playback_default_blend_time = 0.0
+playback_speed = 1.0
+anims/Idle = SubResource( 4 )
+blend_times = [  ]
+
+

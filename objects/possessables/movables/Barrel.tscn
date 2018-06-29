@@ -1,0 +1,104 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://objects/basic/Moveable.tscn" type="PackedScene" id=1]
+[ext_resource path="res://collisions/RoundRectangleShape.tscn" type="PackedScene" id=2]
+[ext_resource path="res://textures/objects/possessables/movables/Barrel.png" type="Texture" id=3]
+[ext_resource path="res://sounds/CrateMove.wav" type="AudioStream" id=4]
+[ext_resource path="res://sounds/CrateImpact.wav" type="AudioStream" id=5]
+[ext_resource path="res://sounds/CrateFalling.wav" type="AudioStream" id=6]
+
+[sub_resource type="GDScript" id=1]
+
+script/source = "extends Sprite
+
+func _ready():
+	$\"../Possessable\".connect(\"possessed\", self, \"possessed\");
+	$\"../Possessable\".connect(\"unpossessed\", self, \"unpossessed\");
+
+func possessed(player):
+	frame = 1;
+	
+func unpossessed(player):
+	frame = 0;
+"
+
+[sub_resource type="GDScript" id=2]
+
+script/source = "extends AudioStreamPlayer2D
+
+onready var moveable = $\"../..\";
+
+func _ready():
+	set_process(false)
+	
+	$\"../../Possessable\".connect(\"possessed\", self, \"possessed\")
+	$\"../../Possessable\".connect(\"unpossessed\", self, \"unpossessed\")
+
+func _process(delta):
+	volume_db = clamp(-60 + abs(moveable.actual_movement.x * 0.6), -60, -28)
+
+func possessed(player):
+	set_process(true)
+	playing = true
+	
+func unpossessed(player):
+	set_process(false)
+	playing = false
+	volume_db = -60"
+
+[node name="Barrel" index="0" instance=ExtResource( 1 )]
+
+z_index = 5
+_sections_unfolded = [ "Collision", "Z Index" ]
+
+[node name="Possessable" parent="." index="0"]
+
+msg_posses_offset = Vector2( 0, -24 )
+
+[node name="CollisionShape2D" parent="." index="1" instance=ExtResource( 2 )]
+
+_sections_unfolded = [ "Transform" ]
+
+[node name="Sprite" type="Sprite" parent="." index="2"]
+
+texture = ExtResource( 3 )
+hframes = 2
+script = SubResource( 1 )
+
+[node name="Sounds" type="Node2D" parent="." index="3"]
+
+[node name="Move" type="AudioStreamPlayer2D" parent="Sounds" index="0"]
+
+stream = ExtResource( 4 )
+volume_db = 0.0
+pitch_scale = 1.0
+autoplay = false
+max_distance = 2000.0
+attenuation = 1.0
+bus = "Effects"
+area_mask = 1
+script = SubResource( 2 )
+
+[node name="Impact" type="AudioStreamPlayer2D" parent="Sounds" index="1"]
+
+stream = ExtResource( 5 )
+volume_db = 0.0
+pitch_scale = 1.0
+autoplay = false
+max_distance = 2000.0
+attenuation = 1.0
+bus = "Effects"
+area_mask = 1
+
+[node name="Falling" type="AudioStreamPlayer2D" parent="Sounds" index="2"]
+
+stream = ExtResource( 6 )
+volume_db = 0.0
+pitch_scale = 1.0
+autoplay = false
+max_distance = 2000.0
+attenuation = 1.0
+bus = "Effects"
+area_mask = 1
+
+

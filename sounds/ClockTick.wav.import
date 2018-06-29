@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/ClockTick.wav-b1e5a8f8daf80767f8222970a68e83d4.sample"
+
+[deps]
+
+source_file="res://sounds/ClockTick.wav"
+dest_files=[ "res://.import/ClockTick.wav-b1e5a8f8daf80767f8222970a68e83d4.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=true
+edit/normalize=true
+edit/loop=false
+compress/mode=0

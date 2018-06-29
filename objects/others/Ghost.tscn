@@ -1,0 +1,293 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://textures/objects/others/Ghost.png" type="Texture" id=1]
+[ext_resource path="res://sounds/GhostMove.wav" type="AudioStream" id=2]
+[ext_resource path="res://textures/lights/Sphere.png" type="Texture" id=3]
+
+
+[sub_resource type="GDScript" id=1]
+
+script/source = "extends KinematicBody2D
+
+# Determines if fullscreen is active
+var is_fullscreen = false
+
+# Deadzone of controller axis.
+const DEADZONE = 0.25
+
+# Deadzone for the movement in pixels per second.
+# Movements with a length smaller than this value will be ignored.
+const MOVEMENT_DEADZONE = 30
+
+enum State {
+	STATE_IDLE,
+	STATE_POSSESSING
+}
+
+# Movement speed in pixels per second.
+export(float) var movement_speed = 1200
+
+# Friction of the movement.
+# The player's speed will be multiplied by this value in the span of one second.
+export(float) var friction = 0.0001
+
+# The state of the player.
+var state = STATE_IDLE setget set_state
+
+# Set to the possessed object.
+var possessed_object = null
+
+# possessible index
+var _possessible_index = 0
+
+# Private position used to calculate movement.
+# The actual position property will be set to a rounded version of this variable.
+onready var _position = position
+
+# Private speed used to calculate movement.
+var _speed = Vector2(0, 0)
+
+# Array of possessables that are currently in range to be possessed.
+var _possessables_in_range = Array()
+
+onready var _snd_move = $\"Sounds/Move\"
+
+var can_switch = true
+
+# Sets the state of the player.
+func set_state(value):
+	if value == STATE_POSSESSING:
+		$\"Sprite\".visible = false
+		_snd_move.playing = false
+		# Divide by length instead of setting to Vector2(0, 0).
+		# This keeps the sign of speed (e.g. for sprite orientation).
+		_speed /= _speed.length()
+	elif value == STATE_IDLE:
+		$\"Sprite\".visible = true
+	
+	state = value
+
+func unpossess():
+	# Switches the player to an unpossessed state.
+	if possessed_object != null and state == STATE_POSSESSING: possessed_object.unpossess()
+
+func _ready():
+	$\"AnimationPlayer\".play(\"Idle\")
+
+func _input(event):
+	
+	# Changes the possessable object
+	if event.is_action_pressed(\"switch_possessale\"):
+		
+		# change the selected object
+		if state == STATE_IDLE:
+		
+			can_switch = true
+			if state != STATE_POSSESSING: _possessible_index += 1
+		
+		# change between objects while possessing
+		elif state == STATE_POSSESSING:
+			
+			var areas = get_tree().get_nodes_in_group(\"Possessables\")
+			var ghost = get_node(\"GhostArea\")
+		
+			var i = 0
+			while i < areas.size():
+				if areas[i].possessed == true or !areas[i].overlaps_area(ghost):
+					areas.remove(i)
+				else: i+=1
+		
+			if areas.size() > 0:
+				unpossess()
+			
+				_possessible_index += 0.5
+				can_switch = false
+				areas[int(_possessible_index) % areas.size()].possess(self)
+		
+	# Enables the Ghost to possess other objects
+	if event.is_action_pressed(\"possess\"):
+		if _possessables_in_range.size() != 0 and state == STATE_IDLE:
+			_possessables_in_range[int(_possessible_index) % _possessables_in_range.size()].possess(self);
+		elif possessed_object != null and state == STATE_POSSESSING:
+			possessed_object.unpossess()
+	
+	# Reloads the current scene
+	# Todo: Save progress
+	if event.is_action_pressed(\"reload\"):
+		
+		get_tree().reload_current_scene()
+	
+	# Changes state from fullscreen to normal and vice versa
+	if event.is_action_pressed(\"switch_fullscreen\"):
+		
+		is_fullscreen = !is_fullscreen
+		
+		if is_fullscreen: OS.set_window_fullscreen(true)
+		else: OS.set_window_fullscreen(false)
+		
+
+func _physics_process(delta):
+	
+	if state == STATE_IDLE:
+		
+		var analog = _deadzone(Vector2(Input.get_joy_axis(0, JOY_AXIS_0), Input.get_joy_axis(0, JOY_AXIS_1)))
+		if analog != Vector2(0, 0):
+			_speed += analog * movement_speed * delta
+		else:
+			var dir = Vector2(0, 0)
+			dir.x += int(Input.is_action_pressed(\"move_right\")) - int(Input.is_action_pressed(\"move_left\"))
+			dir.y += int(Input.is_action_pressed(\"move_down\")) - int(Input.is_action_pressed(\"move_up\"))
+			_speed += dir.normalized() * movement_speed * delta
+			
+		$\"Sprite\".flip_h = _speed.x < 0
+			
+		if _speed.length() > 10:
+			_snd_move.volume_db = clamp(-48 + _speed.length() * 0.2, -48, 0)
+			
+			if not _snd_move.playing:
+				_snd_move.playing = true
+		else:
+			_snd_move.playing = false
+			
+		_position += move_and_slide(limit_movement(_speed)) * delta
+		_speed *= pow(friction, delta)
+			
+		position = Vector2(round(_position.x), round(_position.y))
+			
+		# possess message above selected object, which can be possessed
+		if _possessables_in_range.size() > 0:
+			for i in _possessible_index:
+				_possessables_in_range[(i) % _possessables_in_range.size()].get_node(\"MSG_Possess\").hide()
+			_possessables_in_range[int(_possessible_index) % _possessables_in_range.size()].get_node(\"MSG_Possess\").show()
+	
+
+func limit_movement(axis):
+	if abs(axis.x) < MOVEMENT_DEADZONE:
+		axis.x = 0
+	if abs(axis.y) < MOVEMENT_DEADZONE:
+		axis.y = 0
+	
+	return axis
+
+func _deadzone(axis):
+	var length = axis.length()
+	
+	if length < DEADZONE:
+		return Vector2(0, 0)
+	if length > 1:
+		return axis.normalized()
+	
+	return axis"
+
+[sub_resource type="CircleShape2D" id=2]
+
+custom_solver_bias = 0.0
+radius = 5.32587
+
+[sub_resource type="Animation" id=3]
+
+resource_name = "Idle"
+length = 1.0
+loop = true
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:position")
+tracks/0/interp = 0
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.25, 0.5, 0.65, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( 0, -1 ), Vector2( 0, 0 ), Vector2( 0, 1 ), Vector2( 0, 0 ) ]
+}
+
+[node name="Ghost" type="KinematicBody2D" index="0"]
+
+z_index = 8
+input_pickable = true
+collision_layer = 4
+collision_mask = 1
+collision/safe_margin = 0.08
+script = SubResource( 1 )
+_sections_unfolded = [ "Collision", "Z Index" ]
+movement_speed = 1200
+friction = 0.0001
+
+[node name="CollisionShape" type="CollisionShape2D" parent="." index="0"]
+
+shape = SubResource( 2 )
+
+[node name="GhostArea" type="Area2D" parent="." index="1"]
+
+editor/display_folded = true
+input_pickable = true
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+audio_bus_override = false
+audio_bus_name = "Master"
+
+[node name="CollisionShape2" type="CollisionShape2D" parent="GhostArea" index="0"]
+
+shape = SubResource( 2 )
+
+[node name="Sprite" type="Sprite" parent="." index="2"]
+
+z_index = 1
+texture = ExtResource( 1 )
+_sections_unfolded = [ "Transform", "Z Index" ]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="3"]
+
+root_node = NodePath("..")
+autoplay = ""
+playback_process_mode = 1
+playback_default_blend_time = 0.0
+playback_speed = 1.5
+anims/Idle = SubResource( 3 )
+blend_times = [  ]
+_sections_unfolded = [ "Playback Options" ]
+
+[node name="Sounds" type="Node2D" parent="." index="4"]
+
+editor/display_folded = true
+
+[node name="Move" type="AudioStreamPlayer2D" parent="Sounds" index="0"]
+
+stream = ExtResource( 2 )
+volume_db = 0.0
+pitch_scale = 1.0
+autoplay = false
+max_distance = 2000.0
+attenuation = 1.0
+bus = "Effects"
+area_mask = 1
+
+[node name="Light2D" type="Light2D" parent="." index="5"]
+
+enabled = true
+editor_only = false
+texture = ExtResource( 3 )
+offset = Vector2( 0, 0 )
+texture_scale = 1.0
+color = Color( 1, 1, 1, 1 )
+energy = 0.6
+mode = 0
+range_height = 0.0
+range_z_min = -1024
+range_z_max = 1024
+range_layer_min = 0
+range_layer_max = 0
+range_item_cull_mask = 1
+shadow_enabled = false
+shadow_color = Color( 0, 0, 0, 0 )
+shadow_buffer_size = 2048
+shadow_gradient_length = 0.0
+shadow_filter = 0
+shadow_filter_smooth = 0.0
+shadow_item_cull_mask = 1
+
+

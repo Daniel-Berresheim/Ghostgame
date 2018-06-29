@@ -1,0 +1,355 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://resources/fonts/Creepster-Regular.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://objects/others/Ghost.tscn" type="PackedScene" id=2]
+
+[sub_resource type="GDScript" id=1]
+
+script/source = "extends Node2D
+
+# The size of each room.
+const ROOM_SIZE = Vector2(512, 288)
+
+# Determines if fullscreen is active
+var is_fullscreen = false
+
+# Safe distance for the player to teleport to when transitioning.
+const TRANSITION_PADDING = 16
+
+var border_collision_scene = preload(\"res://collisions/BorderCollision.tscn\")
+var border_collision = null
+
+onready var player = $\"Ghost\"
+
+var transition_speed = 15
+var areas = Array()
+var previous_area = null
+var current_area = null
+
+class Area:
+	var pos
+	var root_node
+	var scene
+	var scene_instance
+	
+	func _init(root_node, pos):
+		self.root_node = root_node
+		self.pos = pos
+		
+		reload()
+	
+	func activate():
+		if scene_instance:
+			scene_instance.get_node(\"LevelProperties\").activate()
+	
+	func deactivate():
+		if scene_instance:
+			scene_instance.get_node(\"LevelProperties\").deactivate()
+	
+	func reload():
+		if scene_instance != null:
+			unload()
+		
+		var resource = \"res://levels/\" + str(pos.x) + \",\" + str(pos.y) + \".tscn\"
+		
+		if File.new().file_exists(resource):
+			self.scene = load(resource)
+			self.scene_instance = self.scene.instance()
+			self.scene_instance.global_position += pos * ROOM_SIZE
+			root_node.add_child(self.scene_instance)
+			#print(\"Loaded scene \" + str(pos))
+			
+	
+	func unload():
+		root_node.areas.erase(self)
+		if scene_instance != null:
+			root_node.remove_child(scene_instance)
+		#print(\"Unloaded scene \" + str(pos))
+		
+
+# general input events for settings
+func _input(event):
+	
+	# Changes state from fullscreen to normal and vice versa
+	if event.is_action_pressed(\"switch_fullscreen\"):
+		
+		is_fullscreen = !is_fullscreen
+		
+		if is_fullscreen: OS.set_window_fullscreen(true)
+		else: OS.set_window_fullscreen(false)
+	
+	# Reloads the current scene
+	# Todo: Save progress
+	if event.is_action_pressed(\"reload\"):
+		
+		get_tree().reload_current_scene()
+
+func round_area_position(pos):
+	pos.x = floor(pos.x / ROOM_SIZE.x)
+	pos.y = floor(pos.y / ROOM_SIZE.y)
+	return pos
+
+func load_area(pos):
+	var area = null
+	for i in range(0, areas.size()):
+		if areas[i].pos == pos:
+			area = areas[i]
+		else:
+			areas[i].deactivate()
+	
+	if area == null:
+		area = Area.new(self, pos)
+		areas.push_back(area)
+	
+	area.activate()
+	return area
+
+func _process(delta):
+	var pos = round_area_position(player.global_position)
+	
+	var camera = $\"Camera\"
+	var target_pos = (pos + Vector2(0.5, 0.5)) * ROOM_SIZE
+	camera.global_position += (target_pos - camera.global_position) * min(delta * transition_speed, 1)
+	if (target_pos - camera.global_position).length_squared() < 0.1:
+		if border_collision != null:
+			remove_child(border_collision)
+			border_collision = null
+		
+		if previous_area:
+			previous_area.unload()
+			previous_area = null
+	
+	var area = load_area(pos)
+	if area != current_area:
+		previous_area = current_area
+		current_area = area
+		
+		player.unpossess()
+		var gpos = player.global_position
+		gpos = Vector2(
+			clamp(gpos.x, pos.x * ROOM_SIZE.x + TRANSITION_PADDING, (pos.x + 1) * ROOM_SIZE.x - TRANSITION_PADDING),
+			clamp(gpos.y, pos.y * ROOM_SIZE.y + TRANSITION_PADDING, (pos.y + 1) * ROOM_SIZE.y - TRANSITION_PADDING)
+		)
+		player.global_position = gpos
+		player._position = gpos
+		
+		border_collision = border_collision_scene.instance()
+		add_child(border_collision)
+		border_collision.global_position = pos * ROOM_SIZE
+		
+		var label = $\"Camera/TransitionText/Label\"
+		var text = current_area.scene_instance.get_node(\"LevelProperties\").title_text
+		if label.text != text:
+			label.text = text
+			$\"Camera/TransitionText/AnimationPlayer\".play(\"AreaEntered\")
+		
+		var music = current_area.scene_instance.get_node(\"LevelProperties\").music
+		if music != $\"MusicPlayer\".stream:
+			$\"MusicPlayer\".stream = music
+			if music == null:
+				# TODO: (Joex3) Fade out.
+				$\"MusicPlayer\".stop()
+			else:
+				$\"MusicPlayer\".play()"
+
+[sub_resource type="Gradient" id=2]
+
+offsets = PoolRealArray( 0, 1 )
+colors = PoolColorArray( 0.417969, 0.877228, 1, 1, 0.810935, 0.439423, 0.945313, 1 )
+
+[sub_resource type="GradientTexture" id=3]
+
+flags = 4
+gradient = SubResource( 2 )
+width = 128
+
+[sub_resource type="Animation" id=4]
+
+resource_name = "AreaEntered"
+length = 4.0
+loop = false
+step = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath("Label:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 3, 4 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 0.453125, 0, 0, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Label:material:shader_param/alpha_cutoff")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.995, 0.025 ]
+}
+
+[sub_resource type="Shader" id=5]
+
+code = "shader_type canvas_item;
+render_mode unshaded;
+
+uniform float alpha_cutoff = 0.5;
+
+void fragment()
+{
+	vec4 color = texture(TEXTURE, UV);
+	if (color.a < alpha_cutoff) {
+		discard;
+	}
+	
+	COLOR = vec4(color.rgb, 1.0) * COLOR;
+}"
+
+[sub_resource type="ShaderMaterial" id=6]
+
+render_priority = 0
+shader = SubResource( 5 )
+shader_param/alpha_cutoff = 0.025
+_sections_unfolded = [ "shader_param" ]
+
+[sub_resource type="DynamicFont" id=7]
+
+size = 32
+use_mipmaps = false
+use_filter = false
+font_data = ExtResource( 1 )
+_sections_unfolded = [ "Settings" ]
+
+[node name="World" type="Node2D" index="0"]
+
+script = SubResource( 1 )
+_sections_unfolded = [ "Transform" ]
+
+[node name="Background" type="ParallaxBackground" parent="." index="0"]
+
+editor/display_folded = true
+layer = -1
+offset = Vector2( 0, 0 )
+rotation = 0.0
+scale = Vector2( 1, 1 )
+transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+scroll_offset = Vector2( 0, 0 )
+scroll_base_offset = Vector2( 0, 0 )
+scroll_base_scale = Vector2( 1, 1 )
+scroll_limit_begin = Vector2( 0, 0 )
+scroll_limit_end = Vector2( 0, 0 )
+scroll_ignore_camera_zoom = false
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="Background" index="0"]
+
+editor/display_folded = true
+z_index = -1
+motion_scale = Vector2( 0, 0 )
+motion_offset = Vector2( 0, 0 )
+motion_mirroring = Vector2( 0, 0 )
+_sections_unfolded = [ "Motion", "Z Index" ]
+
+[node name="Sprite" type="Sprite" parent="Background/ParallaxLayer" index="0"]
+
+position = Vector2( -368, 0 )
+rotation = 1.5708
+scale = Vector2( 3, 768 )
+texture = SubResource( 3 )
+_sections_unfolded = [ "Offset", "Region", "Transform" ]
+
+[node name="Camera" type="Camera2D" parent="." index="1"]
+
+editor/display_folded = true
+position = Vector2( 256, 144 )
+z_index = 4096
+anchor_mode = 1
+rotating = false
+current = true
+zoom = Vector2( 1, 1 )
+limit_left = -2147483647
+limit_top = -2147483647
+limit_right = 2147483647
+limit_bottom = 2147483647
+limit_smoothed = true
+drag_margin_h_enabled = false
+drag_margin_v_enabled = false
+smoothing_enabled = false
+smoothing_speed = 10.0
+offset_v = 0.0
+offset_h = 0.0
+drag_margin_left = 0.1
+drag_margin_top = 0.1
+drag_margin_right = 0.1
+drag_margin_bottom = 0.1
+editor_draw_screen = true
+editor_draw_limits = false
+editor_draw_drag_margin = false
+_sections_unfolded = [ "Drag Margin", "Limit", "Offset", "Smoothing", "Z Index" ]
+
+[node name="TransitionText" type="Node2D" parent="Camera" index="0"]
+
+editor/display_folded = true
+position = Vector2( -256, -144 )
+z_index = 2000
+z_as_relative = false
+_sections_unfolded = [ "Transform", "Z Index" ]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Camera/TransitionText" index="0"]
+
+root_node = NodePath("..")
+autoplay = ""
+playback_process_mode = 1
+playback_default_blend_time = 0.0
+playback_speed = 1.0
+anims/AreaEntered = SubResource( 4 )
+blend_times = [  ]
+
+[node name="Label" type="Label" parent="Camera/TransitionText" index="1"]
+
+modulate = Color( 0.453125, 0, 0, 0 )
+light_mask = 0
+material = SubResource( 6 )
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 32.0
+margin_top = 224.0
+margin_right = 163.0
+margin_bottom = 262.0
+rect_pivot_offset = Vector2( 0, 0 )
+rect_clip_content = false
+mouse_filter = 2
+mouse_default_cursor_shape = 0
+size_flags_horizontal = 1
+size_flags_vertical = 4
+custom_fonts/font = SubResource( 7 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+custom_constants/shadow_offset_x = -2
+custom_constants/shadow_offset_y = 2
+text = "Front Hall"
+percent_visible = 1.0
+lines_skipped = 0
+max_lines_visible = -1
+_sections_unfolded = [ "Material", "Rect", "custom_colors", "custom_constants", "custom_fonts", "custom_styles" ]
+
+[node name="MusicPlayer" type="AudioStreamPlayer" parent="." index="2"]
+
+stream = null
+volume_db = 0.0
+pitch_scale = 1.0
+autoplay = false
+mix_target = 0
+bus = "Music"
+
+[node name="Ghost" parent="." index="3" instance=ExtResource( 2 )]
+
+position = Vector2( 256, 144 )
+
+

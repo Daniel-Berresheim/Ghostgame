@@ -1,0 +1,46 @@
+[gd_scene load_steps=2 format=2]
+
+[sub_resource type="GDScript" id=1]
+
+script/source = "extends Node2D
+
+const ColorChannel = preload(\"res://scripts/ColorChannel.gd\")
+
+export(ColorChannel.Enum) var color_channel = ColorChannel.RED
+export(bool) var active
+
+func _enter_tree():
+	add_user_signal(\"activate\")
+	add_user_signal(\"deactivate\")
+
+func activate():
+	if !active:
+		active = true
+		for node in get_tree().get_nodes_in_group(\"Receiver\"):
+			node.activate(color_channel)
+		emit_signal(\"activate\")
+
+func deactivate():
+	if active:
+		active = false
+		for node in get_tree().get_nodes_in_group(\"Receiver\"):
+			node.deactivate(color_channel)
+		emit_signal(\"deactivate\")
+
+func toggle():
+	if active:
+		activate()
+	else:
+		deactivate()"
+
+[node name="Emitter" type="Node2D" index="0" groups=[
+"Emitter",
+]]
+
+z_index = 2
+script = SubResource( 1 )
+_sections_unfolded = [ "Z Index" ]
+color_channel = null
+active = null
+
+

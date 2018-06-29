@@ -1,0 +1,259 @@
+[gd_scene load_steps=14 format=2]
+
+[ext_resource path="res://objects/basic/LevelProperties.tscn" type="PackedScene" id=1]
+[ext_resource path="res://music/levels/SpookyTest.ogg" type="AudioStream" id=2]
+[ext_resource path="res://textures/backgrounds/Test.png" type="Texture" id=3]
+[ext_resource path="res://tilemaps/TileMapBlocks.tscn" type="PackedScene" id=4]
+[ext_resource path="res://objects/possessables/rigid/Clock.tscn" type="PackedScene" id=5]
+[ext_resource path="res://objects/possessables/movables/Crate.tscn" type="PackedScene" id=6]
+[ext_resource path="res://objects/possessables/movables/SmallCrate.tscn" type="PackedScene" id=7]
+[ext_resource path="res://objects/possessables/movables/Barrel.tscn" type="PackedScene" id=8]
+[ext_resource path="res://objects/possessables/rigid/Lamp.tscn" type="PackedScene" id=9]
+[ext_resource path="res://objects/others/IronCrate.tscn" type="PackedScene" id=10]
+[ext_resource path="res://objects/others/Pumpkin.tscn" type="PackedScene" id=11]
+[ext_resource path="res://collisions/RectangleBody.tscn" type="PackedScene" id=12]
+[ext_resource path="res://objects/possessables/others/Boy.tscn" type="PackedScene" id=13]
+
+
+[node name="World" type="Node2D" index="0"]
+
+position = Vector2( 239.526, 141.308 )
+z_index = -1
+_sections_unfolded = [ "Z Index" ]
+
+[node name="LevelProperties" parent="." index="0" instance=ExtResource( 1 )]
+
+title_text = "Entry Hall"
+base_color = Color( 0.426287, 0.420959, 0.445313, 1 )
+music = ExtResource( 2 )
+
+[node name="Background" type="Sprite" parent="." index="1"]
+
+position = Vector2( 16.4597, 2.6893 )
+texture = ExtResource( 3 )
+region_enabled = true
+region_rect = Rect2( 0, 0, 512, 288 )
+_sections_unfolded = [ "Animation", "Offset", "Region", "Transform", "Visibility", "Z Index" ]
+
+[node name="TileMap" parent="." index="2" instance=ExtResource( 4 )]
+
+position = Vector2( 0.459656, 2.6893 )
+tile_data = PoolIntArray( -524303, 10, 0, -524302, 14, 0, -524301, 14, 0, -524300, 14, 0, -524299, 14, 0, -524298, 14, 0, -524297, 14, 0, -524296, 14, 0, -524295, 14, 0, -524294, 14, 0, -524293, 14, 0, -524292, 14, 0, -524291, 14, 0, -524290, 14, 0, -524289, 14, 0, -589824, 14, 0, -589823, 14, 0, -589822, 14, 0, -589821, 14, 0, -589820, 14, 0, -589819, 14, 0, -589818, 14, 0, -589817, 14, 0, -589816, 14, 0, -589815, 14, 0, -589814, 14, 0, -589813, 14, 0, -589812, 14, 0, -589811, 14, 0, -589810, 14, 0, -589809, 14, 0, -589808, 10, 0, -458767, 11, 0, -458753, 41, 0, -524288, 42, 0, -524287, 42, 0, -524286, 43, 0, -524272, 9, 0, -393231, 11, 0, -393217, 41, 0, -458752, 42, 0, -458751, 42, 0, -458750, 43, 0, -458736, 9, 0, -327695, 11, 0, -327681, 41, 0, -393216, 42, 0, -393215, 42, 0, -393214, 43, 0, -393200, 9, 0, -262159, 11, 0, -262158, 18, 0, -262157, 18, 0, -262156, 19, 0, -262152, 17, 0, -262151, 18, 0, -262150, 18, 0, -262149, 18, 0, -262148, 18, 0, -262147, 18, 0, -262146, 18, 0, -262145, 41, 0, -327680, 42, 0, -327679, 42, 0, -327678, 43, 0, -327664, 9, 0, -196623, 11, 0, -196609, 45, 0, -262144, 46, 0, -262143, 46, 0, -262142, 46, 0, -262141, 34, 0, -262140, 34, 0, -262139, 34, 0, -262138, 35, 0, -262135, 33, 0, -262134, 34, 0, -262133, 34, 0, -262132, 34, 0, -262131, 34, 0, -262130, 34, 0, -262129, 34, 0, -262128, 9, 0, -131087, 11, 0, -196592, 9, 0, -65551, 11, 0, -131056, 9, 0, -15, 11, 0, -65520, 9, 0, 65521, 11, 0, 16, 9, 0, 131057, 15, 0, 65552, 13, 0, 196597, 21, 0, 196598, 22, 0, 196599, 22, 0, 196600, 23, 0, 262133, 25, 0, 262134, 26, 0, 262135, 26, 0, 262136, 27, 0, 327669, 25, 0, 327670, 26, 0, 327671, 26, 0, 327672, 27, 0, 262144, 52, 0, 393201, 7, 0, 393205, 25, 0, 393206, 26, 0, 393207, 26, 0, 393208, 27, 0, 327680, 57, 0, 327681, 50, 0, 327682, 50, 0, 327683, 50, 0, 327684, 50, 0, 327685, 55, 0, 327689, 33, 0, 327690, 34, 0, 327691, 34, 0, 327692, 34, 0, 327693, 34, 0, 327694, 34, 0, 327695, 34, 0, 327696, 5, 0, 458737, 11, 0, 458741, 25, 0, 458742, 26, 0, 458743, 26, 0, 458744, 27, 0, 393216, 56, 0, 393221, 56, 0, 393226, 40, 0, 393232, 9, 0, 524273, 11, 0, 524277, 25, 0, 524278, 26, 0, 524279, 26, 0, 524280, 27, 0, 524287, 53, 0, 458752, 59, 0, 458753, 6, 0, 458754, 6, 0, 458755, 6, 0, 458756, 6, 0, 458757, 6, 0, 458758, 6, 0, 458759, 6, 0, 458760, 6, 0, 458761, 6, 0, 458762, 6, 0, 458763, 6, 0, 458764, 6, 0, 458765, 6, 0, 458766, 6, 0, 458767, 6, 0, 458768, 10, 0, 589809, 10, 0, 589810, 6, 0, 589811, 6, 0, 589812, 6, 0, 589813, 6, 0, 589814, 6, 0, 589815, 6, 0, 589816, 6, 0, 589817, 6, 0, 589818, 6, 0, 589819, 6, 0, 589820, 6, 0, 589821, 6, 0, 589822, 6, 0, 589823, 6, 0, 524288, 6, 0, 524289, 10, 0, 524290, 10, 0, 524291, 10, 0, 524292, 10, 0, 524293, 10, 0, 524294, 10, 0, 524295, 10, 0, 524296, 10, 0, 524297, 10, 0, 524298, 10, 0, 524299, 10, 0, 524300, 10, 0, 524301, 10, 0, 524302, 10, 0, 524303, 10, 0, 524304, 10, 0 )
+
+[node name="Objects" type="Node2D" parent="." index="3"]
+
+position = Vector2( -239.526, -141.308 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Clocks" type="Node2D" parent="Objects" index="0"]
+
+[node name="Clock" parent="Objects/Clocks" index="0" instance=ExtResource( 5 )]
+
+position = Vector2( 456, 144 )
+_sections_unfolded = [ "Transform", "Z Index" ]
+
+[node name="Crates" type="Node2D" parent="Objects" index="1"]
+
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Crate1" parent="Objects/Crates" index="0" instance=ExtResource( 6 )]
+
+position = Vector2( 90, 130 )
+
+[node name="Crate2" parent="Objects/Crates" index="1" instance=ExtResource( 6 )]
+
+position = Vector2( 88, 160 )
+
+[node name="Crate3" parent="Objects/Crates" index="2" instance=ExtResource( 6 )]
+
+position = Vector2( 472, 208 )
+
+[node name="Crate4" parent="Objects/Crates" index="3" instance=ExtResource( 6 )]
+
+position = Vector2( 464, 64 )
+
+[node name="SmallCrates" type="Node2D" parent="Objects" index="2"]
+
+[node name="SmallCrate" parent="Objects/SmallCrates" index="0" instance=ExtResource( 7 )]
+
+position = Vector2( 24, 56 )
+
+[node name="Barrels" type="Node2D" parent="Objects" index="3"]
+
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Barrel" parent="Objects/Barrels" index="0" instance=ExtResource( 8 )]
+
+position = Vector2( 200, 48 )
+
+[node name="Lamps" type="Node2D" parent="Objects" index="4"]
+
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Lamp" parent="Objects/Lamps" index="0" instance=ExtResource( 9 )]
+
+position = Vector2( 128, 64 )
+
+[node name="Lamp2" parent="Objects/Lamps" index="1" instance=ExtResource( 9 )]
+
+position = Vector2( 312, 80 )
+
+[node name="Lamp3" parent="Objects/Lamps" index="2" instance=ExtResource( 9 )]
+
+position = Vector2( 304, 224 )
+
+[node name="Lamp4" parent="Objects/Lamps" index="3" instance=ExtResource( 9 )]
+
+position = Vector2( 280, 224 )
+
+[node name="Lamp5" parent="Objects/Lamps" index="4" instance=ExtResource( 9 )]
+
+position = Vector2( 416, 224 )
+
+[node name="Lamp6" parent="Objects/Lamps" index="5" instance=ExtResource( 9 )]
+
+position = Vector2( 24, 272 )
+
+[node name="IronCrates" type="Node2D" parent="Objects" index="5"]
+
+editor/display_folded = true
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="IronCrate" parent="Objects/IronCrates" index="0" instance=ExtResource( 10 )]
+
+position = Vector2( 208, 256 )
+
+[node name="Pumpkin" parent="Objects" index="6" instance=ExtResource( 11 )]
+
+position = Vector2( 440, 208 )
+
+[node name="Collisions" type="Node2D" parent="." index="4"]
+
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="StaticBody2D01" parent="Collisions" index="0" instance=ExtResource( 12 )]
+
+position = Vector2( 200.474, 90.692 )
+scale = Vector2( 1.75, 0.25 )
+
+[node name="StaticBody2D03" parent="Collisions" index="1" instance=ExtResource( 12 )]
+
+position = Vector2( 56.474, 90.692 )
+scale = Vector2( 1.25, 0.25 )
+
+[node name="StaticBody2D04" parent="Collisions" index="2" instance=ExtResource( 12 )]
+
+position = Vector2( 80.474, -53.308 )
+scale = Vector2( 1, 0.25 )
+
+[node name="StaticBody2D05" parent="Collisions" index="3" instance=ExtResource( 12 )]
+
+position = Vector2( 200.474, -53.308 )
+scale = Vector2( 1.75, 0.25 )
+
+[node name="StaticBody2D06" parent="Collisions" index="4" instance=ExtResource( 12 )]
+
+position = Vector2( 16.474, -85.308 )
+scale = Vector2( 1, 1.25 )
+
+[node name="StaticBody2D07" parent="Collisions" index="5" instance=ExtResource( 12 )]
+
+position = Vector2( -143.526, 82.692 )
+scale = Vector2( 1, 1.5 )
+
+[node name="StaticBody2D08" parent="Collisions" index="6" instance=ExtResource( 12 )]
+
+position = Vector2( -199.526, -69.308 )
+scale = Vector2( 0.75, 0.25 )
+
+[node name="StaticBody2D12" parent="Collisions" index="7" instance=ExtResource( 12 )]
+
+position = Vector2( -71.526, -69.308 )
+scale = Vector2( 1.75, 0.25 )
+
+[node name="StaticBody2D14" parent="Collisions" index="8" instance=ExtResource( 12 )]
+
+position = Vector2( 168.474, 106.692 )
+
+[node name="StaticBody2D15" parent="Collisions" index="9" instance=ExtResource( 12 )]
+
+position = Vector2( 88.474, 106.692 )
+
+[node name="StaticBody2D16" parent="Collisions" index="10" instance=ExtResource( 12 )]
+
+position = Vector2( 8.474, 90.692 )
+scale = Vector2( 0.25, 0.75 )
+
+[node name="StaticBody2D17" parent="Collisions" index="11" instance=ExtResource( 12 )]
+
+position = Vector2( 0.473999, 122.692 )
+scale = Vector2( 0.5, 0.25 )
+
+[node name="SolidCollisions" type="Node2D" parent="." index="5"]
+
+[node name="StaticBody2D17" parent="SolidCollisions" index="0" instance=ExtResource( 12 )]
+
+position = Vector2( -231.526, -45.308 )
+scale = Vector2( 0.25, 2.5 )
+collision_layer = 1
+collision_mask = 1
+
+[node name="StaticBody2D10" parent="SolidCollisions" index="1" instance=ExtResource( 12 )]
+
+position = Vector2( 16.474, -133.308 )
+scale = Vector2( 8, 0.25 )
+collision_layer = 1
+collision_mask = 1
+
+[node name="StaticBody2D11" parent="SolidCollisions" index="2" instance=ExtResource( 12 )]
+
+position = Vector2( 264.474, -45.308 )
+scale = Vector2( 0.25, 2.5 )
+collision_layer = 1
+collision_mask = 1
+
+[node name="StaticBody2D12" parent="SolidCollisions" index="3" instance=ExtResource( 12 )]
+
+position = Vector2( 264.474, 98.692 )
+scale = Vector2( 0.25, 0.5 )
+collision_layer = 1
+collision_mask = 1
+
+[node name="StaticBody2D13" parent="SolidCollisions" index="4" instance=ExtResource( 12 )]
+
+position = Vector2( 16.474, 138.692 )
+scale = Vector2( 8, 0.25 )
+collision_layer = 1
+collision_mask = 1
+
+[node name="StaticBody2D02" parent="SolidCollisions" index="5" instance=ExtResource( 12 )]
+
+position = Vector2( 144.474, 122.692 )
+scale = Vector2( 4, 0.25 )
+collision_layer = 1
+collision_mask = 1
+
+[node name="StaticBody2D09" parent="SolidCollisions" index="6" instance=ExtResource( 12 )]
+
+position = Vector2( -231.526, 106.692 )
+scale = Vector2( 0.25, 0.75 )
+collision_layer = 1
+collision_mask = 1
+
+[node name="Boy" parent="." index="6" instance=ExtResource( 13 )]
+
+position = Vector2( -79.526, -93.308 )
+
+
