@@ -105,7 +105,6 @@ func _physics_process(delta):
 		
 		# todo: 
 		# - moving other Movables by pushing them
-		# - moving other Movables if they are on top of another moving Movable
 		# - moving this code block to another position to save performance
 		
 		move_objects_on_top(speed)

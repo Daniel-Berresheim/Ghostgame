@@ -12,16 +12,9 @@ object doors, trapdoors, switches, buttons and pressure_plates:
 - attached to walls
 - can be activated and deactivated by humans
 - emits signals if activated
-3) pressure_plates:
-- attached to the ground
-- can be activated by movables and humans by walking on it
-- emit signals as long as there is an object on it
-4) doors and trapdoors:
-- doors are three blocks tall and trapdoors are three blocks wide
-- if a signal emitter with the same color is active, they will open
-- can be inverted, that you have to give a signal to close them
-- there should be an iron version of this doors, where the ghost cannot pass through them
-5) later, there should be other doors, which only open, if the player collected a specific amount of items
+3) pressure_plates: (done)
+4) doors and trapdoors: (done)
+5) later, there should be other doors, which only open, if the player collected a specific amount of items; the player cannot move through them
 6) later, there should be special switches, which can be pressed by the ghost and change properties of the whole world (e.g. activate/deactivate lights in the house)
 
 object human:
@@ -59,10 +52,10 @@ others:
 - locks and keys for doors
 - hide function for ghosts
 - pushing blocks
-- static generators, etc. who have changes to the whole house, e.g. turning the electricity on
 - different objects with different moving behaviour 
 - boss level
 - reset system, only current room, save some progress
+
 
 Unsolved Bugs:
 
@@ -91,6 +84,8 @@ Controlls:
 - while possessing, can be used to switch to another possessable in range
 7) jump:
 - used in Human to let him jump
+8) info:
+- only used for debugging, etc.
 
 Collision Layer:
 1) solid_blocks: tilemap blocks, which are solid for all objects including the ghost
