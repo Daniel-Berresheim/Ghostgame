@@ -1,0 +1,158 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://objects/basic/LevelProperties.tscn" type="PackedScene" id=1]
+[ext_resource path="res://textures/backgrounds/Test.png" type="Texture" id=2]
+[ext_resource path="res://tilemaps/TileMapBlocks.tscn" type="PackedScene" id=3]
+[ext_resource path="res://collisions/RectangleBody.tscn" type="PackedScene" id=4]
+[ext_resource path="res://objects/others/Pumpkin.tscn" type="PackedScene" id=5]
+[ext_resource path="res://objects/possessables/others/Boy.tscn" type="PackedScene" id=6]
+[ext_resource path="res://objects/possessables/movables/Crate.tscn" type="PackedScene" id=7]
+[ext_resource path="res://objects/emitter/PressurePlate.tscn" type="PackedScene" id=8]
+[ext_resource path="res://objects/receiver/Door.tscn" type="PackedScene" id=9]
+[ext_resource path="res://objects/possessables/movables/SmallCrate.tscn" type="PackedScene" id=10]
+
+[node name="LevelPreset" type="Node2D" index="0"]
+
+[node name="LevelProperties" parent="." index="0" instance=ExtResource( 1 )]
+
+base_color = Color( 0.820313, 0.820313, 0.820313, 1 )
+
+[node name="Background" type="Sprite" parent="." index="1"]
+
+texture = ExtResource( 2 )
+centered = false
+region_enabled = true
+region_rect = Rect2( 0, 0, 512, 288 )
+_sections_unfolded = [ "Region" ]
+
+[node name="TileMap" parent="." index="2" instance=ExtResource( 3 )]
+
+tile_data = PoolIntArray( 0, 10, 0, 1, 14, 0, 2, 14, 0, 3, 14, 0, 4, 14, 0, 5, 14, 0, 6, 14, 0, 7, 14, 0, 8, 14, 0, 9, 14, 0, 10, 14, 0, 11, 14, 0, 12, 14, 0, 13, 14, 0, 14, 14, 0, 15, 14, 0, 16, 14, 0, 17, 14, 0, 18, 14, 0, 19, 14, 0, 20, 14, 0, 21, 14, 0, 22, 14, 0, 23, 14, 0, 24, 14, 0, 25, 14, 0, 26, 14, 0, 27, 14, 0, 28, 14, 0, 29, 14, 0, 30, 14, 0, 31, 10, 0, 65536, 11, 0, 65567, 9, 0, 131072, 11, 0, 131103, 9, 0, 196608, 11, 0, 196639, 9, 0, 262144, 11, 0, 262175, 9, 0, 327680, 11, 0, 327681, 22, 0, 327682, 22, 0, 327683, 22, 0, 327684, 22, 0, 327685, 22, 0, 327686, 23, 0, 327693, 21, 0, 327694, 18, 0, 327695, 18, 0, 327696, 18, 0, 327697, 18, 0, 327698, 19, 0, 327708, 21, 0, 327709, 22, 0, 327710, 22, 0, 327711, 9, 0, 393216, 11, 0, 393217, 26, 0, 393218, 26, 0, 393219, 26, 0, 393220, 26, 0, 393221, 26, 0, 393222, 27, 0, 393229, 24, 0, 393234, 40, 0, 393244, 25, 0, 393245, 26, 0, 393246, 26, 0, 393247, 9, 0, 458752, 11, 0, 458753, 26, 0, 458754, 26, 0, 458755, 26, 0, 458756, 26, 0, 458757, 26, 0, 458758, 27, 0, 458765, 24, 0, 458770, 40, 0, 458780, 25, 0, 458781, 26, 0, 458782, 26, 0, 458783, 9, 0, 524288, 11, 0, 524289, 26, 0, 524290, 26, 0, 524291, 26, 0, 524292, 26, 0, 524293, 26, 0, 524294, 27, 0, 524301, 24, 0, 524306, 40, 0, 524316, 25, 0, 524317, 26, 0, 524318, 26, 0, 524319, 9, 0, 589824, 11, 0, 589825, 26, 0, 589826, 26, 0, 589827, 26, 0, 589828, 26, 0, 589829, 26, 0, 589830, 27, 0, 589834, 17, 0, 589835, 18, 0, 589836, 18, 0, 589837, 29, 0, 589838, 18, 0, 589839, 18, 0, 589840, 18, 0, 589841, 18, 0, 589842, 23, 0, 589852, 25, 0, 589853, 26, 0, 589854, 26, 0, 589855, 9, 0, 655360, 11, 0, 655361, 26, 0, 655362, 26, 0, 655363, 26, 0, 655364, 26, 0, 655365, 26, 0, 655366, 27, 0, 655373, 40, 0, 655378, 24, 0, 655388, 25, 0, 655389, 26, 0, 655390, 26, 0, 655391, 9, 0, 720896, 11, 0, 720897, 26, 0, 720898, 26, 0, 720899, 26, 0, 720900, 26, 0, 720901, 26, 0, 720902, 27, 0, 720909, 40, 0, 720914, 24, 0, 720924, 25, 0, 720925, 26, 0, 720926, 26, 0, 720927, 9, 0, 786432, 11, 0, 786433, 26, 0, 786434, 26, 0, 786435, 26, 0, 786436, 26, 0, 786437, 26, 0, 786438, 27, 0, 786445, 40, 0, 786450, 25, 0, 786451, 18, 0, 786452, 18, 0, 786453, 19, 0, 786460, 25, 0, 786461, 26, 0, 786462, 26, 0, 786463, 9, 0, 851968, 11, 0, 851969, 26, 0, 851970, 26, 0, 851971, 26, 0, 851972, 26, 0, 851973, 26, 0, 851974, 27, 0, 851981, 17, 0, 851982, 18, 0, 851983, 18, 0, 851984, 18, 0, 851985, 18, 0, 851986, 31, 0, 851996, 29, 0, 851997, 30, 0, 851998, 30, 0, 851999, 13, 0, 917504, 11, 0, 917505, 26, 0, 917506, 26, 0, 917507, 26, 0, 917508, 26, 0, 917509, 26, 0, 917510, 27, 0, 917517, 40, 0, 917522, 40, 0, 983040, 11, 0, 983041, 26, 0, 983042, 26, 0, 983043, 26, 0, 983044, 26, 0, 983045, 26, 0, 983046, 27, 0, 983053, 40, 0, 983058, 40, 0, 1048576, 11, 0, 1048577, 26, 0, 1048578, 26, 0, 1048579, 26, 0, 1048580, 26, 0, 1048581, 26, 0, 1048582, 27, 0, 1048589, 40, 0, 1048594, 40, 0, 1114112, 10, 0, 1114113, 6, 0, 1114114, 6, 0, 1114115, 6, 0, 1114116, 6, 0, 1114117, 6, 0, 1114118, 6, 0, 1114119, 6, 0, 1114120, 6, 0, 1114121, 6, 0, 1114122, 6, 0, 1114123, 6, 0, 1114124, 6, 0, 1114125, 6, 0, 1114126, 6, 0, 1114127, 6, 0, 1114128, 6, 0, 1114129, 6, 0, 1114130, 6, 0, 1114131, 6, 0, 1114132, 6, 0, 1114133, 6, 0, 1114134, 6, 0, 1114135, 6, 0, 1114136, 6, 0, 1114137, 6, 0, 1114138, 6, 0, 1114139, 6, 0, 1114140, 6, 0, 1114141, 6, 0, 1114142, 6, 0, 1114143, 6, 0 )
+
+[node name="SolidCollisions" type="Node2D" parent="." index="3"]
+
+[node name="Rectangle" parent="SolidCollisions" index="0" instance=ExtResource( 4 )]
+
+position = Vector2( 248, 8 )
+scale = Vector2( 7.75, 0.25 )
+collision_layer = 3
+collision_mask = 3
+
+[node name="Rectangle2" parent="SolidCollisions" index="1" instance=ExtResource( 4 )]
+
+position = Vector2( 256, 280 )
+scale = Vector2( 8, 0.25 )
+collision_layer = 3
+collision_mask = 3
+
+[node name="Rectangle3" parent="SolidCollisions" index="2" instance=ExtResource( 4 )]
+
+position = Vector2( 8, 144 )
+scale = Vector2( 0.25, 4 )
+collision_layer = 3
+collision_mask = 3
+
+[node name="Rectangle4" parent="SolidCollisions" index="3" instance=ExtResource( 4 )]
+
+position = Vector2( 504, 112 )
+scale = Vector2( 0.25, 3.5 )
+collision_layer = 3
+collision_mask = 3
+
+[node name="Collisions" type="Node2D" parent="." index="4"]
+
+_sections_unfolded = [ "Transform" ]
+
+[node name="Rectangle" parent="Collisions" index="0" instance=ExtResource( 4 )]
+
+position = Vector2( 64, 176 )
+scale = Vector2( 1.5, 3 )
+
+[node name="Rectangle2" parent="Collisions" index="1" instance=ExtResource( 4 )]
+
+position = Vector2( 472, 152 )
+scale = Vector2( 0.75, 2.25 )
+
+[node name="Rectangle3" parent="Collisions" index="2" instance=ExtResource( 4 )]
+
+position = Vector2( 256, 88 )
+scale = Vector2( 1.5, 0.25 )
+
+[node name="Rectangle4" parent="Collisions" index="3" instance=ExtResource( 4 )]
+
+position = Vector2( 232, 152 )
+scale = Vector2( 2.25, 0.25 )
+
+[node name="Rectangle8" parent="Collisions" index="4" instance=ExtResource( 4 )]
+
+position = Vector2( 256, 216 )
+scale = Vector2( 1.5, 0.25 )
+
+[node name="Rectangle9" parent="Collisions" index="5" instance=ExtResource( 4 )]
+
+position = Vector2( 328, 200 )
+scale = Vector2( 0.749999, 0.25 )
+
+[node name="Rectangle5" parent="Collisions" index="6" instance=ExtResource( 4 )]
+
+position = Vector2( 216, 120 )
+scale = Vector2( 0.25, 0.75 )
+
+[node name="Rectangle6" parent="Collisions" index="7" instance=ExtResource( 4 )]
+
+position = Vector2( 216, 120 )
+scale = Vector2( 0.25, 0.75 )
+
+[node name="Rectangle7" parent="Collisions" index="8" instance=ExtResource( 4 )]
+
+position = Vector2( 296, 184 )
+scale = Vector2( 0.25, 0.75 )
+
+[node name="Objects" type="Node2D" parent="." index="5"]
+
+position = Vector2( 8, 0 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Pumpkin" parent="Objects" index="0" instance=ExtResource( 5 )]
+
+position = Vector2( 264, 128 )
+
+[node name="Boy" parent="Objects" index="1" instance=ExtResource( 6 )]
+
+position = Vector2( 272, 64 )
+
+[node name="Crate" parent="Objects" index="2" instance=ExtResource( 7 )]
+
+position = Vector2( 184, 128 )
+
+[node name="Crate4" parent="Objects" index="3" instance=ExtResource( 7 )]
+
+position = Vector2( 224, 64 )
+
+[node name="Crate2" parent="Objects" index="4" instance=ExtResource( 7 )]
+
+position = Vector2( 320, 176 )
+
+[node name="Crate5" parent="Objects" index="5" instance=ExtResource( 7 )]
+
+position = Vector2( 464, 64 )
+
+[node name="Crate3" parent="Objects" index="6" instance=ExtResource( 7 )]
+
+position = Vector2( 232, 128 )
+
+[node name="PressurePlate" parent="Objects" index="7" instance=ExtResource( 8 )]
+
+position = Vector2( 248, 208 )
+
+[node name="Door" parent="Objects" index="8" instance=ExtResource( 9 )]
+
+position = Vector2( 288, 120 )
+
+[node name="SmallCrate" parent="Objects" index="9" instance=ExtResource( 10 )]
+
+position = Vector2( 80, 72 )
+
+
