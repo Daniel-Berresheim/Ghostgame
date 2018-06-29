@@ -6,7 +6,6 @@
 [ext_resource path="res://sounds/HumanWalk.wav" type="AudioStream" id=4]
 [ext_resource path="res://sounds/HumanDie.wav" type="AudioStream" id=5]
 
-
 [sub_resource type="GDScript" id=1]
 
 script/source = "extends KinematicBody2D
@@ -51,6 +50,9 @@ var on_ground = true
 
 var fall_position = 0
 
+# The collision box of the human.
+var collision_box = Rect2()
+
 var was_walking = false
 
 onready var _p = $\"Possessable\"
@@ -59,6 +61,9 @@ onready var _animation = get_node(\"AnimationPlayer\")
 func _ready():
 	
 	_animation.play(\"Idle\")
+	
+	# get the size of the object
+	collision_box = Rect2($CollisionShape2D.position, $CollisionShape2D.get_shape().extents * 2)
 
 func _physics_process(delta):
 	
@@ -346,7 +351,7 @@ pitch_scale = 1.0
 autoplay = false
 max_distance = 2000.0
 attenuation = 1.0
-bus = "Effects"
+bus = "Master"
 area_mask = 1
 
 [node name="Die" type="AudioStreamPlayer2D" parent="Sounds" index="1"]
@@ -357,7 +362,7 @@ pitch_scale = 1.0
 autoplay = false
 max_distance = 2000.0
 attenuation = 1.0
-bus = "Effects"
+bus = "Master"
 area_mask = 1
 
 [node name="CollisionUp" type="Area2D" parent="." index="6"]
