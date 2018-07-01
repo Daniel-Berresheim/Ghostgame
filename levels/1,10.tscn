@@ -1,0 +1,112 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://objects/basic/LevelProperties.tscn" type="PackedScene" id=1]
+[ext_resource path="res://music/levels/SpookyTest.ogg" type="AudioStream" id=2]
+[ext_resource path="res://textures/backgrounds/1,10.png" type="Texture" id=3]
+[ext_resource path="res://collisions/RectangleBody.tscn" type="PackedScene" id=4]
+[ext_resource path="res://textures/lights/Sphere.png" type="Texture" id=5]
+
+[node name="LevelPreset" type="Node2D" index="0"]
+
+[node name="LevelProperties" parent="." index="0" instance=ExtResource( 1 )]
+
+title_text = "Graveyard"
+base_color = Color( 0.574219, 0.574219, 0.574219, 1 )
+music = ExtResource( 2 )
+
+[node name="Background" type="Sprite" parent="." index="1"]
+
+texture = ExtResource( 3 )
+centered = false
+region_enabled = true
+region_rect = Rect2( 0, 0, 512, 288 )
+_sections_unfolded = [ "Region" ]
+
+[node name="SolidCollisions" type="Node2D" parent="." index="2"]
+
+[node name="Rectangle3" parent="SolidCollisions" index="0" instance=ExtResource( 4 )]
+
+position = Vector2( 256, 256 )
+scale = Vector2( 8, 1 )
+collision_layer = 3
+collision_mask = 3
+
+[node name="Rectangle4" parent="SolidCollisions" index="1" instance=ExtResource( 4 )]
+
+position = Vector2( 256, -8 )
+scale = Vector2( 8.5, 0.25 )
+collision_layer = 3
+collision_mask = 3
+
+[node name="Rectangle5" parent="SolidCollisions" index="2" instance=ExtResource( 4 )]
+
+position = Vector2( -8, 144 )
+scale = Vector2( 0.25, 4.5 )
+collision_layer = 3
+collision_mask = 3
+
+[node name="Rectangle6" parent="SolidCollisions" index="3" instance=ExtResource( 4 )]
+
+position = Vector2( 520, 144 )
+scale = Vector2( 0.25, 4.5 )
+collision_layer = 3
+collision_mask = 3
+
+[node name="Collisions" type="Node2D" parent="." index="3"]
+
+editor/display_folded = true
+
+[node name="Rectangle" parent="Collisions" index="0" instance=ExtResource( 4 )]
+
+position = Vector2( 148, 216 )
+scale = Vector2( 1.375, 0.25 )
+
+[node name="Rectangle2" parent="Collisions" index="1" instance=ExtResource( 4 )]
+
+position = Vector2( 80, 220 )
+scale = Vector2( 0.75, 0.125 )
+
+[node name="Rectangle5" parent="Collisions" index="2" instance=ExtResource( 4 )]
+
+position = Vector2( 432, 220 )
+scale = Vector2( 0.75, 0.125 )
+
+[node name="Rectangle3" parent="Collisions" index="3" instance=ExtResource( 4 )]
+
+position = Vector2( 80, 192 )
+scale = Vector2( 0.5, 0.75 )
+
+[node name="Rectangle4" parent="Collisions" index="4" instance=ExtResource( 4 )]
+
+position = Vector2( 432, 192 )
+scale = Vector2( 0.5, 0.75 )
+
+[node name="Objects" type="Node2D" parent="." index="4"]
+
+[node name="Light2D" type="Light2D" parent="." index="5"]
+
+position = Vector2( 60, 140 )
+enabled = true
+editor_only = false
+texture = ExtResource( 5 )
+offset = Vector2( 0, 0 )
+texture_scale = 1.0
+color = Color( 0.9375, 0.776138, 0.498047, 1 )
+energy = 1.0
+mode = 0
+range_height = 0.0
+range_z_min = -1024
+range_z_max = 1024
+range_layer_min = 0
+range_layer_max = 0
+range_item_cull_mask = 1
+shadow_enabled = false
+shadow_color = Color( 0, 0, 0, 0 )
+shadow_buffer_size = 2048
+shadow_gradient_length = 0.0
+shadow_filter = 0
+shadow_filter_smooth = 0.0
+shadow_item_cull_mask = 1
+_sections_unfolded = [ "Transform" ]
+
+
