@@ -11,7 +11,7 @@
 [node name="LevelProperties" parent="." index="0" instance=ExtResource( 1 )]
 
 title_text = "Graveyard"
-base_color = Color( 0.574219, 0.574219, 0.574219, 1 )
+base_color = Color( 0.710938, 0.710938, 0.710938, 1 )
 music = ExtResource( 2 )
 
 [node name="Background" type="Sprite" parent="." index="1"]

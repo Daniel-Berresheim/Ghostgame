@@ -4,13 +4,9 @@
 [ext_resource path="res://sounds/GhostMove.wav" type="AudioStream" id=2]
 [ext_resource path="res://textures/lights/Sphere.png" type="Texture" id=3]
 
-
 [sub_resource type="GDScript" id=1]
 
 script/source = "extends KinematicBody2D
-
-# Determines if fullscreen is active
-var is_fullscreen = false
 
 # Deadzone of controller axis.
 const DEADZONE = 0.25
@@ -111,21 +107,6 @@ func _input(event):
 		elif possessed_object != null and state == STATE_POSSESSING:
 			possessed_object.unpossess()
 	
-	# Reloads the current scene
-	# Todo: Save progress
-	if event.is_action_pressed(\"reload\"):
-		
-		get_tree().reload_current_scene()
-	
-	# Changes state from fullscreen to normal and vice versa
-	if event.is_action_pressed(\"switch_fullscreen\"):
-		
-		is_fullscreen = !is_fullscreen
-		
-		if is_fullscreen: OS.set_window_fullscreen(true)
-		else: OS.set_window_fullscreen(false)
-		
-
 func _physics_process(delta):
 	
 	if state == STATE_IDLE:

@@ -10,7 +10,8 @@ script/source = "extends Node2D
 const ROOM_SIZE = Vector2(512, 288)
 
 # room to start
-export var start_room = Vector2(1,10)
+export var start_room = Vector2(0,0)
+export var start_position = Vector2(128,208)
 
 # Determines if fullscreen is active
 var is_fullscreen = false
@@ -59,20 +60,16 @@ class Area:
 			self.scene_instance = self.scene.instance()
 			self.scene_instance.global_position += pos * ROOM_SIZE
 			root_node.add_child(self.scene_instance)
-			#print(\"Loaded scene \" + str(pos))
 			
-	
 	func unload():
 		root_node.areas.erase(self)
 		if scene_instance != null:
 			root_node.remove_child(scene_instance)
-		#print(\"Unloaded scene \" + str(pos))
 		
-
 # sets player position
 func _ready():
 	
-	var start_pos = Vector2(start_room.x * ROOM_SIZE.x + (ROOM_SIZE.x / 2), start_room.y * ROOM_SIZE.y + (ROOM_SIZE.y / 2))
+	var start_pos = Vector2(start_room.x * ROOM_SIZE.x + start_position.x, start_room.y * ROOM_SIZE.y + start_position.y)
 	
 	$\"Ghost\"._position = start_pos
 
@@ -91,8 +88,10 @@ func _input(event):
 	# Todo: Save progress
 	if event.is_action_pressed(\"reload\"):
 		
-		get_tree().reload_current_scene()
-
+		# this key should call a reload function, which reloads the current level and sets the position 
+		# of the ghost to the position, where he entered the room
+		pass
+		
 func round_area_position(pos):
 	pos.x = floor(pos.x / ROOM_SIZE.x)
 	pos.y = floor(pos.y / ROOM_SIZE.y)
@@ -245,10 +244,10 @@ _sections_unfolded = [ "Settings" ]
 script = SubResource( 1 )
 _sections_unfolded = [ "Transform" ]
 start_room = Vector2( 1, 10 )
+start_position = Vector2( 128, 208 )
 
 [node name="Background" type="ParallaxBackground" parent="." index="0"]
 
-editor/display_folded = true
 layer = -1
 offset = Vector2( 0, 0 )
 rotation = 0.0
@@ -263,7 +262,6 @@ scroll_ignore_camera_zoom = false
 
 [node name="ParallaxLayer" type="ParallaxLayer" parent="Background" index="0"]
 
-editor/display_folded = true
 z_index = -1
 motion_scale = Vector2( 0, 0 )
 motion_offset = Vector2( 0, 0 )
@@ -361,6 +359,6 @@ bus = "Music"
 
 [node name="Ghost" parent="." index="3" instance=ExtResource( 1 )]
 
-_sections_unfolded = [ "Transform", "Z Index" ]
+_sections_unfolded = [ "Collision", "Transform", "Z Index" ]
 
 
