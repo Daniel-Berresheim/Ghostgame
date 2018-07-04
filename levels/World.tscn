@@ -1,177 +1,20 @@
 [gd_scene load_steps=10 format=2]
 
-[ext_resource path="res://objects/Ghost.tscn" type="PackedScene" id=1]
+[ext_resource path="res://scripts/World.gd" type="Script" id=1]
+[ext_resource path="res://objects/Ghost.tscn" type="PackedScene" id=2]
 
-[sub_resource type="GDScript" id=1]
-
-script/source = "extends Node2D
-
-# The size of each room.
-const ROOM_SIZE = Vector2(512, 288)
-
-# room to start
-export var start_room = Vector2(0,0)
-export var start_position = Vector2(128,208)
-
-# Determines if fullscreen is active
-var is_fullscreen = false
-
-# Safe distance for the player to teleport to when transitioning.
-const TRANSITION_PADDING = 16
-
-var border_collision_scene = preload(\"res://collisions/BorderCollision.tscn\")
-var border_collision = null
-
-onready var player = $\"Ghost\"
-
-var transition_speed = 15
-var areas = Array()
-var previous_area = null
-var current_area = null
-
-class Area:
-	var pos
-	var root_node
-	var scene
-	var scene_instance
-	
-	func _init(root_node, pos):
-		self.root_node = root_node
-		self.pos = pos
-		
-		reload()
-	
-	func activate():
-		if scene_instance:
-			scene_instance.get_node(\"LevelProperties\").activate()
-	
-	func deactivate():
-		if scene_instance:
-			scene_instance.get_node(\"LevelProperties\").deactivate()
-	
-	func reload():
-		if scene_instance != null:
-			unload()
-		
-		var resource = \"res://levels/\" + str(pos.x) + \",\" + str(pos.y) + \".tscn\"
-		
-		if File.new().file_exists(resource):
-			self.scene = load(resource)
-			self.scene_instance = self.scene.instance()
-			self.scene_instance.global_position += pos * ROOM_SIZE
-			root_node.add_child(self.scene_instance)
-			
-	func unload():
-		root_node.areas.erase(self)
-		if scene_instance != null:
-			root_node.remove_child(scene_instance)
-		
-# sets player position
-func _ready():
-	
-	var start_pos = Vector2(start_room.x * ROOM_SIZE.x + start_position.x, start_room.y * ROOM_SIZE.y + start_position.y)
-	
-	$\"Ghost\"._position = start_pos
-
-# general input events for settings
-func _input(event):
-	
-	# Changes state from fullscreen to normal and vice versa
-	if event.is_action_pressed(\"switch_fullscreen\"):
-		
-		is_fullscreen = !is_fullscreen
-		
-		if is_fullscreen: OS.set_window_fullscreen(true)
-		else: OS.set_window_fullscreen(false)
-	
-	# Reloads the current scene
-	# Todo: Save progress
-	if event.is_action_pressed(\"reload\"):
-		
-		# this key should call a reload function, which reloads the current level and sets the position 
-		# of the ghost to the position, where he entered the room
-		pass
-		
-func round_area_position(pos):
-	pos.x = floor(pos.x / ROOM_SIZE.x)
-	pos.y = floor(pos.y / ROOM_SIZE.y)
-	return pos
-
-func load_area(pos):
-	var area = null
-	for i in range(0, areas.size()):
-		if areas[i].pos == pos:
-			area = areas[i]
-		else:
-			areas[i].deactivate()
-	
-	if area == null:
-		area = Area.new(self, pos)
-		areas.push_back(area)
-	
-	area.activate()
-	return area
-
-func _process(delta):
-	var pos = round_area_position(player.global_position)
-	
-	var camera = $\"Camera\"
-	var target_pos = (pos + Vector2(0.5, 0.5)) * ROOM_SIZE
-	camera.global_position += (target_pos - camera.global_position) * min(delta * transition_speed, 1)
-	if (target_pos - camera.global_position).length_squared() < 0.1:
-		if border_collision != null:
-			remove_child(border_collision)
-			border_collision = null
-		
-		if previous_area:
-			previous_area.unload()
-			previous_area = null
-	
-	var area = load_area(pos)
-	if area != current_area:
-		previous_area = current_area
-		current_area = area
-		
-		player.unpossess()
-		var gpos = player.global_position
-		gpos = Vector2(
-			clamp(gpos.x, pos.x * ROOM_SIZE.x + TRANSITION_PADDING, (pos.x + 1) * ROOM_SIZE.x - TRANSITION_PADDING),
-			clamp(gpos.y, pos.y * ROOM_SIZE.y + TRANSITION_PADDING, (pos.y + 1) * ROOM_SIZE.y - TRANSITION_PADDING)
-		)
-		player.global_position = gpos
-		player._position = gpos
-		
-		border_collision = border_collision_scene.instance()
-		add_child(border_collision)
-		border_collision.global_position = pos * ROOM_SIZE
-		
-		var label = $\"Camera/TransitionText/Label\"
-		var text = current_area.scene_instance.get_node(\"LevelProperties\").title_text
-		if label.text != text:
-			label.text = text
-			$\"Camera/TransitionText/AnimationPlayer\".play(\"AreaEntered\")
-		
-		var music = current_area.scene_instance.get_node(\"LevelProperties\").music
-		if music != $\"MusicPlayer\".stream:
-			$\"MusicPlayer\".stream = music
-			if music == null:
-				# TODO: (Joex3) Fade out.
-				$\"MusicPlayer\".stop()
-			else:
-				$\"MusicPlayer\".play()"
-
-[sub_resource type="Gradient" id=2]
+[sub_resource type="Gradient" id=1]
 
 offsets = PoolRealArray( 0, 1 )
 colors = PoolColorArray( 0.417969, 0.877228, 1, 1, 0.810935, 0.439423, 0.945313, 1 )
 
-[sub_resource type="GradientTexture" id=3]
+[sub_resource type="GradientTexture" id=2]
 
 flags = 4
-gradient = SubResource( 2 )
+gradient = SubResource( 1 )
 width = 128
 
-[sub_resource type="Animation" id=4]
+[sub_resource type="Animation" id=3]
 
 resource_name = "AreaEntered"
 length = 4.0
@@ -202,7 +45,7 @@ tracks/1/keys = {
 "values": [ 0.98, 0.05 ]
 }
 
-[sub_resource type="Shader" id=5]
+[sub_resource type="Shader" id=4]
 
 code = "shader_type canvas_item;
 render_mode unshaded;
@@ -219,31 +62,31 @@ void fragment()
 	COLOR = vec4(color.rgb, 1.0) * COLOR;
 }"
 
-[sub_resource type="ShaderMaterial" id=6]
+[sub_resource type="ShaderMaterial" id=5]
 
 render_priority = 0
-shader = SubResource( 5 )
+shader = SubResource( 4 )
 shader_param/alpha_cutoff = 0.98
 _sections_unfolded = [ "shader_param" ]
 
-[sub_resource type="DynamicFontData" id=7]
+[sub_resource type="DynamicFontData" id=6]
 
 hinting = 2
 font_path = "res://fonts/Creepster-Regular.ttf"
 
-[sub_resource type="DynamicFont" id=8]
+[sub_resource type="DynamicFont" id=7]
 
 size = 32
 use_mipmaps = false
 use_filter = false
-font_data = SubResource( 7 )
+font_data = SubResource( 6 )
 _sections_unfolded = [ "Settings" ]
 
 [node name="World" type="Node2D" index="0"]
 
-script = SubResource( 1 )
+script = ExtResource( 1 )
 _sections_unfolded = [ "Transform" ]
-start_room = Vector2( 1, 10 )
+start_room = Vector2( 0, 0 )
 start_position = Vector2( 128, 208 )
 
 [node name="Background" type="ParallaxBackground" parent="." index="0"]
@@ -273,7 +116,7 @@ _sections_unfolded = [ "Motion", "Z Index" ]
 position = Vector2( -368, 0 )
 rotation = 1.5708
 scale = Vector2( 3, 768 )
-texture = SubResource( 3 )
+texture = SubResource( 2 )
 _sections_unfolded = [ "Offset", "Region", "Transform" ]
 
 [node name="Camera" type="Camera2D" parent="." index="1"]
@@ -319,13 +162,13 @@ autoplay = ""
 playback_process_mode = 1
 playback_default_blend_time = 0.0
 playback_speed = 1.0
-anims/AreaEntered = SubResource( 4 )
+anims/AreaEntered = SubResource( 3 )
 blend_times = [  ]
 
 [node name="Label" type="Label" parent="Camera/TransitionText" index="1"]
 
 modulate = Color( 1, 1, 1, 0 )
-material = SubResource( 6 )
+material = SubResource( 5 )
 anchor_left = 0.0
 anchor_top = 0.0
 anchor_right = 0.0
@@ -340,7 +183,7 @@ mouse_filter = 2
 mouse_default_cursor_shape = 0
 size_flags_horizontal = 1
 size_flags_vertical = 4
-custom_fonts/font = SubResource( 8 )
+custom_fonts/font = SubResource( 7 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 text = "Entry Hall"
 percent_visible = 1.0
@@ -357,7 +200,7 @@ autoplay = false
 mix_target = 0
 bus = "Music"
 
-[node name="Ghost" parent="." index="3" instance=ExtResource( 1 )]
+[node name="Ghost" parent="." index="3" instance=ExtResource( 2 )]
 
 _sections_unfolded = [ "Collision", "Transform", "Z Index" ]
 

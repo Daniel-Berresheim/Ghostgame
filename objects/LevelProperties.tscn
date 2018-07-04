@@ -1,41 +1,10 @@
 [gd_scene load_steps=2 format=2]
 
-[sub_resource type="GDScript" id=1]
-
-script/source = "tool
-extends Node2D
-
-var is_ready = false
-var is_active = true
-export var title_text = \"\"
-export var base_color = Color(1.0, 1.0, 1.0) setget set_base_color
-export(AudioStream) var music;
-
-func _ready():
-	is_ready = true
-	set_base_color(base_color)
-
-func activate():
-	if !is_active:
-		if is_ready:
-			$\"CanvasModulate\".visible = true
-
-func deactivate():
-	if is_active:
-		is_active = false
-		if is_ready:
-			$\"CanvasModulate\".visible = false
-
-func set_base_color(value):
-	if is_ready:
-		$\"CanvasModulate\".color = value
-	
-	base_color = value
-"
+[ext_resource path="res://scripts/LevelProperties.gd" type="Script" id=1]
 
 [node name="LevelProperties" type="Node2D" index="0"]
 
-script = SubResource( 1 )
+script = ExtResource( 1 )
 title_text = ""
 base_color = Color( 1, 1, 1, 1 )
 music = null
