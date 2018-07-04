@@ -1,7 +1,9 @@
 [gd_scene load_steps=6 format=2]
 
-[ext_resource path="res://objects/basic/Emitter.tscn" type="PackedScene" id=1]
+[ext_resource path="res://objects/emitter/Emitter.tscn" type="PackedScene" id=1]
 [ext_resource path="res://textures/objects/emitter/PressurePlate.png" type="Texture" id=2]
+
+
 
 [sub_resource type="GDScript" id=1]
 
@@ -17,7 +19,7 @@ func _activate():
 func _deactivate():
 	frame = 0"
 
-[sub_resource type="GDScript" id=2]
+[sub_resource type="GDScript" id=4]
 
 script/source = "extends Area2D
 
@@ -65,7 +67,7 @@ linear_damp = 0.1
 angular_damp = 1.0
 audio_bus_override = false
 audio_bus_name = "Master"
-script = SubResource( 2 )
+script = SubResource( 4 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Logic" index="0"]
 

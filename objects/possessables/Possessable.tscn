@@ -1,0 +1,114 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://scripts/Possessable.gd" type="Script" id=1]
+[ext_resource path="res://sounds/Possess.wav" type="AudioStream" id=2]
+[ext_resource path="res://sounds/Unpossess.wav" type="AudioStream" id=3]
+[ext_resource path="res://sounds/Possessable.wav" type="AudioStream" id=4]
+[ext_resource path="res://scripts/MSG_Possess.gd" type="Script" id=5]
+[ext_resource path="res://textures/ui/Possess.png" type="Texture" id=6]
+
+[sub_resource type="CanvasItemMaterial" id=3]
+
+render_priority = 0
+blend_mode = 0
+light_mode = 1
+
+[sub_resource type="Animation" id=4]
+
+resource_name = "Idle"
+length = 1.0
+loop = true
+step = 0.1
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 0, 1 ]
+}
+
+[node name="Possessable" type="Area2D" index="0" groups=[
+"Possessables",
+]]
+
+position = Vector2( 1, 1 )
+input_pickable = true
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+audio_bus_override = false
+audio_bus_name = "Master"
+script = ExtResource( 1 )
+_sections_unfolded = [ "Collision" ]
+msg_posses_offset = Vector2( 0, 0 )
+
+[node name="Sounds" type="Node2D" parent="." index="0"]
+
+[node name="Possess" type="AudioStreamPlayer2D" parent="Sounds" index="0"]
+
+stream = ExtResource( 2 )
+volume_db = 0.0
+pitch_scale = 1.0
+autoplay = false
+max_distance = 2000.0
+attenuation = 1.0
+bus = "Effects"
+area_mask = 1
+
+[node name="Unpossess" type="AudioStreamPlayer2D" parent="Sounds" index="1"]
+
+stream = ExtResource( 3 )
+volume_db = 0.0
+pitch_scale = 1.0
+autoplay = false
+max_distance = 2000.0
+attenuation = 1.0
+bus = "Effects"
+area_mask = 1
+
+[node name="Possessable" type="AudioStreamPlayer2D" parent="Sounds" index="2"]
+
+stream = ExtResource( 4 )
+volume_db = -3.0
+pitch_scale = 1.0
+autoplay = false
+max_distance = 2000.0
+attenuation = 1.0
+bus = "Effects"
+area_mask = 1
+
+[node name="MSG_Possess" type="Node2D" parent="." index="1"]
+
+visible = false
+z_index = 10
+script = ExtResource( 5 )
+_sections_unfolded = [ "Transform", "Z Index" ]
+
+[node name="Possess" type="Sprite" parent="MSG_Possess" index="0"]
+
+light_mask = 0
+material = SubResource( 3 )
+z_index = 10
+z_as_relative = false
+texture = ExtResource( 6 )
+vframes = 2
+frame = 1
+_sections_unfolded = [ "Animation", "Material", "Transform", "Visibility", "Z Index" ]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="MSG_Possess/Possess" index="0"]
+
+root_node = NodePath("..")
+autoplay = ""
+playback_process_mode = 1
+playback_default_blend_time = 0.0
+playback_speed = 1.0
+anims/Idle = SubResource( 4 )
+blend_times = [  ]
+
+

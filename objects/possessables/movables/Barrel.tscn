@@ -1,25 +1,28 @@
 [gd_scene load_steps=9 format=2]
 
-[ext_resource path="res://objects/basic/Moveable.tscn" type="PackedScene" id=1]
+[ext_resource path="res://objects/possessables/movables/Moveable.tscn" type="PackedScene" id=1]
 [ext_resource path="res://collisions/RoundRectangleShape.tscn" type="PackedScene" id=2]
 [ext_resource path="res://textures/objects/possessables/movables/Barrel.png" type="Texture" id=3]
 [ext_resource path="res://sounds/CrateMove.wav" type="AudioStream" id=4]
 [ext_resource path="res://sounds/CrateImpact.wav" type="AudioStream" id=5]
 [ext_resource path="res://sounds/CrateFalling.wav" type="AudioStream" id=6]
 
+
+
+
 [sub_resource type="GDScript" id=1]
 
 script/source = "extends Sprite
 
 func _ready():
-	$\"../Possessable\".connect(\"possessed\", self, \"possessed\");
-	$\"../Possessable\".connect(\"unpossessed\", self, \"unpossessed\");
+	$\"../Possessable\".connect(\"possessed\", self, \"possessed\")
+	$\"../Possessable\".connect(\"unpossessed\", self, \"unpossessed\")
 
 func possessed(player):
-	frame = 1;
+	frame = 1
 	
 func unpossessed(player):
-	frame = 0;
+	frame = 0
 "
 
 [sub_resource type="GDScript" id=2]

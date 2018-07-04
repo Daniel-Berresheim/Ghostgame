@@ -2,12 +2,12 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/IronCrate.png-ae220643b6c5d1c6057bd64c61e2d03b.stex"
+path="res://.import/Boy.png-92eb36199a40ee412cf5af4cfec5753d.stex"
 
 [deps]
 
-source_file="res://textures/objects/others/IronCrate.png"
-dest_files=[ "res://.import/IronCrate.png-ae220643b6c5d1c6057bd64c61e2d03b.stex" ]
+source_file="res://textures/objects/possessables/Boy.png"
+dest_files=[ "res://.import/Boy.png-92eb36199a40ee412cf5af4cfec5753d.stex" ]
 
 [params]
 

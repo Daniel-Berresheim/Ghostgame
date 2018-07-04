@@ -2,12 +2,12 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Pumpkin.png-845df525d51903ae59b48506c1348640.stex"
+path="res://.import/Ghost.png-702ae84b241d678fa3c637b05ee423d0.stex"
 
 [deps]
 
-source_file="res://textures/objects/others/Pumpkin.png"
-dest_files=[ "res://.import/Pumpkin.png-845df525d51903ae59b48506c1348640.stex" ]
+source_file="res://textures/objects/Ghost.png"
+dest_files=[ "res://.import/Ghost.png-702ae84b241d678fa3c637b05ee423d0.stex" ]
 
 [params]
 

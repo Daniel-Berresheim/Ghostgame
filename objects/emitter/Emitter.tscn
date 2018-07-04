@@ -1,0 +1,15 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://scripts/Emitter.gd" type="Script" id=1]
+
+[node name="Emitter" type="Node2D" index="0" groups=[
+"Emitter",
+]]
+
+z_index = 2
+script = ExtResource( 1 )
+_sections_unfolded = [ "Z Index" ]
+color_channel = null
+active = null
+
+

@@ -2,12 +2,12 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Boy.png-3ef749015e4c972612304f4c8db2a08e.stex"
+path="res://.import/Lamp.png-e30d8ccf6fb5e9cca2319bdd841f964b.stex"
 
 [deps]
 
-source_file="res://textures/objects/possessables/others/Boy.png"
-dest_files=[ "res://.import/Boy.png-3ef749015e4c972612304f4c8db2a08e.stex" ]
+source_file="res://textures/objects/possessables/Lamp.png"
+dest_files=[ "res://.import/Lamp.png-e30d8ccf6fb5e9cca2319bdd841f964b.stex" ]
 
 [params]
 

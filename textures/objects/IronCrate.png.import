@@ -2,12 +2,12 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Clock.png-628fb66f6e604072b123598f3ed18bea.stex"
+path="res://.import/IronCrate.png-07bb3c21d78c963aca4a4c6c29c9791b.stex"
 
 [deps]
 
-source_file="res://textures/objects/possessables/rigid/Clock.png"
-dest_files=[ "res://.import/Clock.png-628fb66f6e604072b123598f3ed18bea.stex" ]
+source_file="res://textures/objects/IronCrate.png"
+dest_files=[ "res://.import/IronCrate.png-07bb3c21d78c963aca4a4c6c29c9791b.stex" ]
 
 [params]
 
